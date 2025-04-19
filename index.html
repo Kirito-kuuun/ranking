@@ -513,7 +513,20 @@
                 { rank: 11, name: "LES ORIGINELS", booyah: 0, kills: 10, points: 14 },
                 { rank: 12, name: "DREAD NOUGHT", booyah: 0, kills: 2, points: 5 }
             ],
-            "Lobby B": []
+            "Lobby B": [
+                { rank: 1, name: "DOOMBRINGERS", booyah: 0, kills: 0, points: 0 },
+                { rank: 2, name: "CIPHER POL O", booyah: 0, kills: 0, points: 0 },
+                { rank: 3, name: "AMBOHIPO STREET", booyah: 0, kills: 0, points: 0 },
+                { rank: 4, name: "JOBA", booyah: 0, kills: 0, points: 0 },
+                { rank: 5, name: "INSANE UND", booyah: 0, kills: 0, points: 0 },
+                { rank: 6, name: "DEAD", booyah: 0, kills: 0, points: 0 },
+                { rank: 7, name: "MDG E-SPORT", booyah: 0, kills: 0, points: 0 },
+                { rank: 8, name: "EAZY GAMES", booyah: 0, kills: 0, points: 0 },
+                { rank: 9, name: "BRIGADE FANTÔME", booyah: 0, kills: 0, points: 0 },
+                { rank: 10, name: "THE INVISIBLE AFK", booyah: 0, kills: 0, points: 0 },
+                { rank: 11, name: "MADA GOAT E-SPORT", booyah: 0, kills: 0, points: 0 },
+                { rank: 12, name: "SUICIDE SQUAD", booyah: 0, kills: 0, points: 0 }
+            ]
         };
 
         // ===== GESTION DU LOADER =====
@@ -689,17 +702,51 @@
             // Titre du lobby
             const titleElement = document.createElement('div');
             titleElement.className = 'lobby-title';
-            titleElement.textContent = 'Lobby B - CLASSEMENT';
+            titleElement.textContent = 'Lobby B - EN COURS';
             lobbyElement.appendChild(titleElement);
+            
+            // En-tête du tableau
+            const headerElement = document.createElement('div');
+            headerElement.className = 'table-header';
+            headerElement.innerHTML = `
+                <div>#</div>
+                <div>TEAM NAME</div>
+                <div>BOOYAH</div>
+                <div>KILLS</div>
+                <div>T.PTS</div>
+            `;
+            lobbyElement.appendChild(headerElement);
+            
+            // Liste des équipes
+            const teamListElement = document.createElement('div');
+            teamListElement.className = 'team-list';
+            
+            // Ajouter les équipes
+            TEAMS_DATA["Lobby B"].forEach((team) => {
+                const teamElement = document.createElement('div');
+                teamElement.className = 'team';
+                
+                teamElement.innerHTML = `
+                    <div class="team-rank">${team.rank}</div>
+                    <div class="team-name">${team.name}</div>
+                    <div class="team-stat">-</div>
+                    <div class="team-stat">-</div>
+                    <div class="team-stat team-points">-</div>
+                `;
+                
+                teamListElement.appendChild(teamElement);
+            });
             
             // Message d'information
             const infoElement = document.createElement('div');
             infoElement.className = 'info-container';
             infoElement.innerHTML = `
-                <p>Le classement du <span class="highlight">Lobby B</span> sera disponible après le match.</p>
+                <p>Le match du <span class="highlight">Lobby B</span> est actuellement en cours.</p>
+                <p>Veuillez patienter pour les résultats finaux.</p>
             `;
-            lobbyElement.appendChild(infoElement);
             
+            lobbyElement.appendChild(teamListElement);
+            lobbyElement.appendChild(infoElement);
             lobbyContainer.appendChild(lobbyElement);
         }
 
