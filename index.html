@@ -467,7 +467,7 @@
                 <img class="logo-img" id="main-logo" alt="Logo organisateur">
             </div>
             
-            <h1>CLASSEMENT DES LOBBIES</h1>
+            <h1>CLASSEMENT PROVISOIRE DES LOBBIES</h1>
             <p class="subtitle">NATIONAL QUALIFIERS 2025 - PHASE DE GROUPE</p>
         </div>
 
@@ -497,7 +497,7 @@
             minLoadingTime: 2000 // Temps minimum d'affichage du loader en ms
         };
 
-        // DONNÉES DES LOBBIES (mis à jour)
+        // DONNÉES DES LOBBIES
         const TEAMS_DATA = {
             "Lobby A": [
                 { rank: 1, name: "OLD GAMER", booyah: 2, kills: 60, points: 97 },
@@ -514,18 +514,18 @@
                 { rank: 12, name: "DREAD NOUGHT", booyah: 0, kills: 2, points: 5 }
             ],
             "Lobby B": [
-                { rank: 1, name: "DOOMBRINGERS", booyah: 0, kills: 0, points: 0 },
-                { rank: 2, name: "CIPHER POL O", booyah: 0, kills: 0, points: 0 },
-                { rank: 3, name: "AMBOHIPO STREET", booyah: 0, kills: 0, points: 0 },
-                { rank: 4, name: "JOBA", booyah: 0, kills: 0, points: 0 },
-                { rank: 5, name: "INSANE UND", booyah: 0, kills: 0, points: 0 },
-                { rank: 6, name: "DEAD", booyah: 0, kills: 0, points: 0 },
-                { rank: 7, name: "MDG E-SPORT", booyah: 0, kills: 0, points: 0 },
-                { rank: 8, name: "EAZY GAMES", booyah: 0, kills: 0, points: 0 },
-                { rank: 9, name: "BRIGADE FANTÔME", booyah: 0, kills: 0, points: 0 },
-                { rank: 10, name: "THE INVISIBLE AFK", booyah: 0, kills: 0, points: 0 },
-                { rank: 11, name: "MADA GOAT E-SPORT", booyah: 0, kills: 0, points: 0 },
-                { rank: 12, name: "SUICIDE SQUAD", booyah: 0, kills: 0, points: 0 }
+                { name: "AMBOHIPO STREET", booyah: 1, kills: 35, points: 54 },  // 23+31 (1 Booyah)
+                { name: "BRIGADE FANTÔME", booyah: 1, kills: 14, points: 27 },  // 24+3 (1 Booyah)
+                { name: "EAZY GAMES", booyah: 0, kills: 12, points: 29 },      // 20+9
+                { name: "THE INVISIBLE AFK", booyah: 0, kills: 16, points: 28 }, // 13+15
+                { name: "MDG E-SPORT", booyah: 0, kills: 16, points: 29 },      // 16+13
+                { name: "CIPHER POL 0", booyah: 0, kills: 7, points: 13 },      // 0+13
+                { name: "DOOMBRINGERS", booyah: 0, kills: 3, points: 9 },       // 9+0
+                { name: "INSANE UND", booyah: 0, kills: 5, points: 12 },        // 8+4
+                { name: "MADA GOAT E-SPORT", booyah: 0, kills: 4, points: 8 },  // 7+1
+                { name: "JOBA", booyah: 0, kills: 7, points: 13 },             // 5+8
+                { name: "SUICIDE SQUAD", booyah: 0, kills: 4, points: 9 },     // 4+5
+                { name: "DEAD", booyah: 0, kills: 3, points: 10 }              // 1+9
             ]
         };
 
@@ -541,38 +541,30 @@
             // Animation de la barre de progression
             const progressInterval = setInterval(() => {
                 progress += Math.random() * 10;
-                if (progress > 90) progress = 90; // Ne pas aller jusqu'à 100% tout de suite
+                if (progress > 90) progress = 90;
                 progressBar.style.width = `${progress}%`;
             }, 200);
             
-            // Fonction pour terminer le chargement
             function completeLoading() {
                 const elapsed = Date.now() - startTime;
                 const remainingTime = Math.max(0, CONFIG.minLoadingTime - elapsed);
                 
                 setTimeout(() => {
                     clearInterval(progressInterval);
-                    
-                    // Finir la barre de progression
                     progressBar.style.width = '100%';
                     
-                    // Masquer le loader
                     setTimeout(() => {
                         loader.style.opacity = '0';
                         
-                        // Afficher le contenu principal
                         setTimeout(() => {
                             loader.style.display = 'none';
                             mainContent.style.opacity = '1';
-                            
-                            // Initialiser le reste du site
                             initSite();
                         }, 500);
                     }, 300);
                 }, remainingTime);
             }
             
-            // Vérifier si les polices sont chargées
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(() => {
                     completeLoading();
@@ -580,7 +572,6 @@
                     setTimeout(completeLoading, CONFIG.minLoadingTime);
                 });
             } else {
-                // Fallback si document.fonts n'est pas supporté
                 setTimeout(completeLoading, CONFIG.minLoadingTime);
             }
         }
@@ -600,13 +591,11 @@
             const logo = document.getElementById('main-logo');
             const img = new Image();
             
-            // Solution de fallback pour le logo
             img.onload = function() {
                 logo.src = this.src;
             };
             
             img.onerror = function() {
-                // Fallback 1: Essayer avec une autre extension
                 const fallbackExtensions = ['.png', '.jpeg', '.webp', '.svg'];
                 let tried = 0;
                 
@@ -621,7 +610,6 @@
                         fallbackImg.onerror = tryNextFallback;
                         fallbackImg.src = newSrc;
                     } else {
-                        // Fallback final: SVG généré
                         logo.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%231a0d2a'/%3E%3Ctext x='60' y='65' font-family='Arial' font-size='14' fill='%23ffffff' text-anchor='middle'%3ENQ 2025%3C/text%3E%3C/svg%3E";
                         document.body.classList.add('degraded-mode');
                     }
@@ -637,17 +625,14 @@
             const lobbyContainer = document.getElementById('lobby-a');
             lobbyContainer.innerHTML = '';
             
-            // Créer le conteneur du lobby
             const lobbyElement = document.createElement('div');
             lobbyElement.className = 'lobby';
             
-            // Titre du lobby
             const titleElement = document.createElement('div');
             titleElement.className = 'lobby-title';
             titleElement.textContent = 'Lobby A - CLASSEMENT';
             lobbyElement.appendChild(titleElement);
             
-            // En-tête du tableau
             const headerElement = document.createElement('div');
             headerElement.className = 'table-header';
             headerElement.innerHTML = `
@@ -659,11 +644,9 @@
             `;
             lobbyElement.appendChild(headerElement);
             
-            // Liste des équipes
             const teamListElement = document.createElement('div');
             teamListElement.className = 'team-list';
             
-            // Ajouter les équipes
             TEAMS_DATA["Lobby A"].forEach((team, index) => {
                 const teamElement = document.createElement('div');
                 teamElement.className = `team ${team.rank <= 6 ? 'qualified' : 'eliminated'}`;
@@ -676,7 +659,6 @@
                     <div class="team-stat team-points">${team.points}</div>
                 `;
                 
-                // Ajouter un séparateur après la 6ème équipe
                 if (team.rank === 6) {
                     const separator = document.createElement('div');
                     separator.className = 'separator';
@@ -695,17 +677,14 @@
             const lobbyContainer = document.getElementById('lobby-b');
             lobbyContainer.innerHTML = '';
             
-            // Créer le conteneur du lobby
             const lobbyElement = document.createElement('div');
             lobbyElement.className = 'lobby';
             
-            // Titre du lobby
             const titleElement = document.createElement('div');
             titleElement.className = 'lobby-title';
-            titleElement.textContent = 'Lobby B - EN COURS';
+            titleElement.textContent = 'Lobby B - RÉSULTATS PROVISOIRES';
             lobbyElement.appendChild(titleElement);
             
-            // En-tête du tableau
             const headerElement = document.createElement('div');
             headerElement.className = 'table-header';
             headerElement.innerHTML = `
@@ -717,32 +696,39 @@
             `;
             lobbyElement.appendChild(headerElement);
             
-            // Liste des équipes
             const teamListElement = document.createElement('div');
             teamListElement.className = 'team-list';
             
-            // Ajouter les équipes
-            TEAMS_DATA["Lobby B"].forEach((team) => {
+            // Trier les équipes par points décroissants
+            const sortedTeams = [...TEAMS_DATA["Lobby B"]].sort((a, b) => b.points - a.points);
+            
+            sortedTeams.forEach((team, index) => {
                 const teamElement = document.createElement('div');
-                teamElement.className = 'team';
+                teamElement.className = `team ${index < 6 ? 'qualified' : ''}`;
                 
                 teamElement.innerHTML = `
-                    <div class="team-rank">${team.rank}</div>
+                    <div class="team-rank">${index + 1}</div>
                     <div class="team-name">${team.name}</div>
-                    <div class="team-stat">-</div>
-                    <div class="team-stat">-</div>
-                    <div class="team-stat team-points">-</div>
+                    <div class="team-stat">${team.booyah}</div>
+                    <div class="team-stat">${team.kills}</div>
+                    <div class="team-stat team-points">${team.points}</div>
                 `;
                 
-                teamListElement.appendChild(teamElement);
+                if (index === 5) {
+                    const separator = document.createElement('div');
+                    separator.className = 'separator';
+                    teamListElement.appendChild(teamElement);
+                    teamListElement.appendChild(separator);
+                } else {
+                    teamListElement.appendChild(teamElement);
+                }
             });
             
-            // Message d'information
             const infoElement = document.createElement('div');
             infoElement.className = 'info-container';
             infoElement.innerHTML = `
-                <p>Le match du <span class="highlight">Lobby B</span> est actuellement en cours.</p>
-                <p>Veuillez patienter pour les résultats finaux.</p>
+                <p>Classement provisoire après <span class="highlight">2 matchs</span> du Lobby B.</p>
+                <p>Le tournoi est toujours en cours - les résultats peuvent évoluer.</p>
             `;
             
             lobbyElement.appendChild(teamListElement);
@@ -824,18 +810,14 @@
             console.error("Erreur interceptée:", event.message || event);
             document.body.classList.add('degraded-mode');
             
-            // Empêcher la propagation de l'erreur
             if (event.preventDefault) event.preventDefault();
             return true;
         }
 
         // ===== INITIALISATION =====
         document.addEventListener('DOMContentLoaded', () => {
-            // Configurer le gestionnaire d'erreurs global
             window.addEventListener('error', handleGlobalError);
             window.addEventListener('unhandledrejection', handleGlobalError);
-            
-            // Démarrer l'animation de chargement
             simulateLoading();
         });
     </script>
