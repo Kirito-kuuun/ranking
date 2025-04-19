@@ -500,17 +500,17 @@
                 { rank: 12, name: "DREAD NOUGHT", booyah: 0, kills: 2, points: 5 }
             ],
             "Lobby B": [
-                { name: "BRIGADE FANTÔME", booyah: 2, kills: 32, points: 57 },
-                { name: "AMBOHIPO STREET", booyah: 1, kills: 48, points: 76 },
-                { name: "THE INVISIBLE AFK", booyah: 0, kills: 17, points: 30 },
-                { name: "MDG E-SPORT", booyah: 0, kills: 19, points: 37 },
-                { name: "EAZY GAMES", booyah: 0, kills: 14, points: 33 },
-                { name: "SUICIDE SQUAD", booyah: 0, kills: 14, points: 23 },
-                { name: "INSANE UND", booyah: 0, kills: 14, points: 28 },
+                { name: "EAZY GAMES", booyah: 1, kills: 36, points: 67 },
+                { name: "BRIGADE FANTÔME", booyah: 2, kills: 43, points: 77 },
+                { name: "AMBOHIPO STREET", booyah: 1, kills: 52, points: 83 },
+                { name: "SUICIDE SQUAD", booyah: 0, kills: 26, points: 43 },
+                { name: "MDG E-SPORT", booyah: 0, kills: 22, points: 45 },
+                { name: "CIPHER POL 0", booyah: 0, kills: 18, points: 34 },
+                { name: "DOOMBRINGERS", booyah: 0, kills: 11, points: 27 },
+                { name: "INSANE UND", booyah: 0, kills: 16, points: 32 },
+                { name: "DEAD", booyah: 0, kills: 7, points: 20 },
+                { name: "THE INVISIBLE AFK", booyah: 0, kills: 17, points: 31 },
                 { name: "JOBA", booyah: 0, kills: 12, points: 24 },
-                { name: "CIPHER POL 0", booyah: 0, kills: 10, points: 19 },
-                { name: "DOOMBRINGERS", booyah: 0, kills: 6, points: 16 },
-                { name: "DEAD", booyah: 0, kills: 5, points: 13 },
                 { name: "MADA GOAT E-SPORT", booyah: 0, kills: 4, points: 9 }
             ]
         };
@@ -665,7 +665,7 @@
             
             const titleElement = document.createElement('div');
             titleElement.className = 'lobby-title';
-            titleElement.textContent = 'Lobby B - CUMUL 3 MATCHS';
+            titleElement.textContent = 'Lobby B - CLASSEMENT PROVISOIRE';
             lobbyElement.appendChild(titleElement);
             
             const headerElement = document.createElement('div');
@@ -709,9 +709,8 @@
             const infoElement = document.createElement('div');
             infoElement.className = 'info-container';
             infoElement.innerHTML = `
-                <p>Classement provisoire après <span class="highlight">3 matchs</span> du Lobby B.</p>
-                <p>BRIGADE FANTÔME a remporté 2 BOOYAH sur les 3 matchs.</p>
-                <p>Le tournoi est toujours en cours - les résultats peuvent évoluer.</p>
+                <p>Classement provisoire après <span class="highlight">4 matchs</span> du Lobby B.</p>
+                <p>Le staff effectue les vérifications finales - les résultats peuvent encore évoluer.</p>
             `;
             
             lobbyElement.appendChild(teamListElement);
