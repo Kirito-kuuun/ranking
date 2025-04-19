@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CLASSEMENT FINAL - NATIONAL QUALIFIERS 2025</title>
+    <title>RÉSULTATS & RÉPARTITION - NATIONAL QUALIFIERS 2025</title>
     
     <link rel="icon" href="./assets/images/icon.ico" type="image/x-icon">
     
@@ -27,6 +27,7 @@
             --qualif-color: #00ff88;
             --elim-color: #ff3366;
             --warning-color: #ffcc00;
+            --final-color: #aa00ff;
         }
 
         * {
@@ -255,6 +256,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .final-title {
+            background: linear-gradient(to right, var(--final-color), #6a00bb);
+            color: white;
+        }
+
         .table-header {
             display: grid;
             grid-template-columns: 50px minmax(150px, 2fr) 80px 80px 80px;
@@ -470,18 +476,20 @@
                 <img class="logo-img" id="main-logo" alt="Logo organisateur">
             </div>
             
-            <h1>CLASSEMENT FINAL DES LOBBIES</h1>
-            <p class="subtitle">NATIONAL QUALIFIERS 2025 - PHASE ELIMINATOIRE</p>
+            <h1>PHASE FINALE - RÉPARTITION DES SIÈGES</h1>
+            <p class="subtitle">NATIONAL QUALIFIERS 2025 - RÉSULTATS</p>
         </div>
 
         <div class="lobby-nav">
             <button class="lobby-nav-btn active" id="btn-lobby-a">Lobby A</button>
             <button class="lobby-nav-btn" id="btn-lobby-b">Lobby B</button>
+            <button class="lobby-nav-btn" id="btn-lobby-final">Équipes Qualifiées</button>
         </div>
 
         <div class="lobby-container">
             <div class="lobby animate__animated animate__fadeIn" id="lobby-a"></div>
             <div class="lobby animate__animated animate__fadeIn" id="lobby-b" style="display: none;"></div>
+            <div class="lobby animate__animated animate__fadeIn" id="lobby-final" style="display: none;"></div>
         </div>
 
         <footer>
@@ -523,8 +531,24 @@
                 { name: "DOOMBRINGERS", booyah: 0, kills: 14, points: 26 },
                 { name: "DEAD", booyah: 0, kills: 8, points: 21 },
                 { name: "MADA GOAT ESPORT", booyah: 0, kills: 4, points: 8 }
-            ]
+            ],
+            "Lobby Final": []
         };
+
+        // Création du lobby final avec les 12 équipes qualifiées
+        function prepareFinalLobby() {
+            // Récupérer les 6 meilleures équipes de chaque lobby
+            const lobbyATeams = TEAMS_DATA["Lobby A"].slice(0, 6);
+            const lobbyBTeams = [...TEAMS_DATA["Lobby B"]].sort((a, b) => b.points - a.points).slice(0, 6);
+            
+            // Fusionner et trier par points décroissants
+            TEAMS_DATA["Lobby Final"] = [...lobbyATeams, ...lobbyBTeams]
+                .sort((a, b) => b.points - a.points)
+                .map((team, index) => ({
+                    ...team,
+                    rank: index + 1
+                }));
+        }
 
         function simulateLoading() {
             const loader = document.getElementById('loader');
@@ -572,9 +596,11 @@
         }
         
         function initSite() {
+            prepareFinalLobby();
             loadLogo();
             displayLobbyA();
             displayLobbyB();
+            displayFinalLobby();
             setupNavigation();
             createParticles();
             checkAnimateCSS();
@@ -733,24 +759,93 @@
             lobbyContainer.appendChild(lobbyElement);
         }
 
+        function displayFinalLobby() {
+            const lobbyContainer = document.getElementById('lobby-final');
+            lobbyContainer.innerHTML = '';
+            
+            const lobbyElement = document.createElement('div');
+            lobbyElement.className = 'lobby';
+            
+            const titleElement = document.createElement('div');
+            titleElement.className = 'lobby-title final-title';
+            titleElement.textContent = '12 ÉQUIPES QUALIFIÉES POUR LA FINALE';
+            lobbyElement.appendChild(titleElement);
+            
+            const headerElement = document.createElement('div');
+            headerElement.className = 'table-header';
+            headerElement.innerHTML = `
+                <div>#</div>
+                <div>NOM DE L'ÉQUIPE</div>
+                <div>LOBBY</div>
+            `;
+            lobbyElement.appendChild(headerElement);
+            
+            const teamListElement = document.createElement('div');
+            teamListElement.className = 'team-list';
+            
+            TEAMS_DATA["Lobby Final"].forEach((team, index) => {
+                const teamElement = document.createElement('div');
+                teamElement.className = `team qualified`;
+                
+                // Détermine le lobby d'origine
+                const lobbyA = TEAMS_DATA["Lobby A"].some(t => t.name === team.name);
+                const lobby = lobbyA ? "A" : "B";
+                
+                teamElement.innerHTML = `
+                    <div class="team-rank">${team.rank}</div>
+                    <div class="team-name">${team.name}</div>
+                    <div class="team-stat">LOBBY ${lobby}</div>
+                `;
+                
+                teamListElement.appendChild(teamElement);
+            });
+            
+            const infoElement = document.createElement('div');
+            infoElement.className = 'info-container';
+            infoElement.innerHTML = `
+                <p><span class="highlight">FÉLICITATIONS</span> aux 12 équipes qualifiées pour la grande finale !</p>
+                <p>Rendez-vous au <span class="highlight">Stade Barea Mahamasina</span> pour le tournoi final où les meilleures équipes s'affronteront pour le titre.</p>
+                <p>Les équipes sont reparties ici selon leur performance globale dans les matchs éliminatoires.</p>
+            `;
+            
+            lobbyElement.appendChild(teamListElement);
+            lobbyElement.appendChild(infoElement);
+            lobbyContainer.appendChild(lobbyElement);
+        }
+
         function setupNavigation() {
             const btnLobbyA = document.getElementById('btn-lobby-a');
             const btnLobbyB = document.getElementById('btn-lobby-b');
+            const btnLobbyFinal = document.getElementById('btn-lobby-final');
             const lobbyA = document.getElementById('lobby-a');
             const lobbyB = document.getElementById('lobby-b');
+            const lobbyFinal = document.getElementById('lobby-final');
             
             btnLobbyA.addEventListener('click', () => {
                 btnLobbyA.classList.add('active');
                 btnLobbyB.classList.remove('active');
+                btnLobbyFinal.classList.remove('active');
                 lobbyA.style.display = 'block';
                 lobbyB.style.display = 'none';
+                lobbyFinal.style.display = 'none';
             });
             
             btnLobbyB.addEventListener('click', () => {
                 btnLobbyB.classList.add('active');
                 btnLobbyA.classList.remove('active');
+                btnLobbyFinal.classList.remove('active');
                 lobbyA.style.display = 'none';
                 lobbyB.style.display = 'block';
+                lobbyFinal.style.display = 'none';
+            });
+            
+            btnLobbyFinal.addEventListener('click', () => {
+                btnLobbyFinal.classList.add('active');
+                btnLobbyA.classList.remove('active');
+                btnLobbyB.classList.remove('active');
+                lobbyA.style.display = 'none';
+                lobbyB.style.display = 'none';
+                lobbyFinal.style.display = 'block';
             });
         }
 
