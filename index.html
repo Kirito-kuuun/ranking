@@ -273,6 +273,18 @@
             text-align: center;
         }
 
+        .final-table-header {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) minmax(200px, 2fr);
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
         .table-header div {
             display: flex;
             align-items: center;
@@ -294,11 +306,21 @@
             position: relative;
         }
 
-        .team:nth-child(even) {
+        .final-team {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) minmax(200px, 2fr);
+            padding: 0.8rem 1rem;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .team:nth-child(even), .final-team:nth-child(even) {
             background: rgba(255, 255, 255, 0.08);
         }
 
-        .team.qualified {
+        .team.qualified, .final-team {
             border-left: 4px solid var(--qualif-color);
             background: rgba(0, 255, 136, 0.1) !important;
         }
@@ -312,19 +334,19 @@
             background: rgba(255, 204, 0, 0.1) !important;
         }
 
-        .team div {
+        .team div, .final-team div {
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
         }
 
-        .team-rank {
+        .team-rank, .final-team-rank {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
         }
 
-        .team-name {
+        .team-name, .final-team-name {
             justify-content: flex-start;
             padding-left: 0.5rem;
             text-align: left;
@@ -444,6 +466,11 @@
             .team div:nth-child(3) {
                 display: none;
             }
+
+            .final-table-header,
+            .final-team {
+                grid-template-columns: minmax(150px, 1fr) minmax(150px, 2fr);
+            }
         }
 
         @media (max-width: 480px) {
@@ -463,6 +490,13 @@
             
             .team-name {
                 font-size: 0.85rem;
+            }
+
+            .final-table-header,
+            .final-team {
+                grid-template-columns: minmax(120px, 1fr) minmax(120px, 2fr);
+                font-size: 0.9rem;
+                padding: 0.6rem 0.5rem;
             }
         }
     </style>
@@ -735,7 +769,7 @@
             
             sortedTeams.forEach((team, index) => {
                 const teamElement = document.createElement('div');
-                teamElement.className = `team ${index < 6 ? 'qualified' : ''}`;
+                teamElement.className = `team ${index < 6 ? 'qualified' : 'eliminated'}`;
                 teamElement.style.setProperty('--order', index);
                 
                 teamElement.innerHTML = `
@@ -791,11 +825,10 @@
             lobbyElement.appendChild(titleElement);
             
             const headerElement = document.createElement('div');
-            headerElement.className = 'table-header';
+            headerElement.className = 'final-table-header';
             headerElement.innerHTML = `
-                <div>#</div>
-                <div>NOM DE L'ÉQUIPE</div>
-                <div>LOBBY</div>
+                <div>SIÈGE POUR LE LOBBY FINAL</div>
+                <div>TEAM NAME</div>
             `;
             lobbyElement.appendChild(headerElement);
             
@@ -804,16 +837,11 @@
             
             TEAMS_DATA["Lobby Final"].forEach((team, index) => {
                 const teamElement = document.createElement('div');
-                teamElement.className = `team qualified`;
-                
-                // Détermine le lobby d'origine
-                const lobbyA = TEAMS_DATA["Lobby A"].some(t => t.name === team.name);
-                const lobby = lobbyA ? "A" : "B";
+                teamElement.className = `final-team`;
                 
                 teamElement.innerHTML = `
-                    <div class="team-rank">${team.rank}</div>
-                    <div class="team-name">${team.name}</div>
-                    <div class="team-stat">LOBBY ${lobby}</div>
+                    <div class="final-team-rank">${team.rank}</div>
+                    <div class="final-team-name">${team.name}</div>
                 `;
                 
                 teamListElement.appendChild(teamElement);
