@@ -414,6 +414,18 @@
             background: rgba(40, 35, 60, 0.95);
         }
 
+        /* Animation spéciale Pâques */
+        @keyframes hop {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(5deg); }
+            75% { transform: translateY(-5px) rotate(-5deg); }
+        }
+
+        .team.qualified {
+            animation: hop 1s ease infinite;
+            animation-delay: calc(var(--order) * 0.1s);
+        }
+
         @media (max-width: 768px) {
             .overlay {
                 padding: 1rem;
@@ -524,10 +536,10 @@
                 { name: "BRIGADE FANTÔME", booyah: 2, kills: 26, points: 58 },
                 { name: "MDG ESPORT", booyah: 0, kills: 27, points: 46 },
                 { name: "SSQ", booyah: 0, kills: 25, points: 45 },
+                { name: "THE INVISIBLE AFK", booyah: 0, kills: 20, points: 41 },
                 { name: "CPO", booyah: 0, kills: 24, points: 36 },
-                { name: "THE INVISIBLE AFK", booyah: 0, kills: 19, points: 35, penalty: 5, originalPoints: 40 },
+                { name: "INSANE UND", booyah: 0, kills: 13, points: 35 },
                 { name: "JOBA", booyah: 0, kills: 14, points: 29 },
-                { name: "INSANE", booyah: 0, kills: 7, points: 29 },
                 { name: "DOOMBRINGERS", booyah: 0, kills: 14, points: 26 },
                 { name: "DEAD", booyah: 0, kills: 8, points: 21 },
                 { name: "MADA GOAT ESPORT", booyah: 0, kills: 4, points: 8 }
@@ -723,19 +735,15 @@
             
             sortedTeams.forEach((team, index) => {
                 const teamElement = document.createElement('div');
-                teamElement.className = `team ${index < 6 ? 'qualified' : ''} ${team.penalty ? 'penalized' : ''}`;
-                
-                let pointsDisplay = team.points;
-                if (team.penalty) {
-                    pointsDisplay = `${team.points} <span class="warning">(-${team.penalty})</span>`;
-                }
+                teamElement.className = `team ${index < 6 ? 'qualified' : ''}`;
+                teamElement.style.setProperty('--order', index);
                 
                 teamElement.innerHTML = `
                     <div class="team-rank">${index + 1}</div>
                     <div class="team-name">${team.name}</div>
                     <div class="team-stat">${team.booyah}</div>
                     <div class="team-stat">${team.kills}</div>
-                    <div class="team-stat team-points">${pointsDisplay}</div>
+                    <div class="team-stat team-points">${team.points}</div>
                 `;
                 
                 if (index === 5) {
@@ -749,9 +757,20 @@
             });
             
             const infoElement = document.createElement('div');
-            infoElement.className = 'info-container';
+            infoElement.className = 'info-container animate__animated animate__pulse';
+            infoElement.style.background = 'linear-gradient(to right, rgba(94, 53, 177, 0.8), rgba(28, 176, 246, 0.8))';
+            infoElement.style.border = '1px solid gold';
             infoElement.innerHTML = `
-                <p><span class="warning">PÉNALITÉ :</span> La team THE INVISIBLE AFK a reçu une pénalité de <strong>5 points</strong> pour présence d'un joueur non inscrit sur leur feuille de match (40 → 35 points).</p>
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <span style="color: gold; font-size: 1.5em;">🐰 JOYEUSES PÂQUES ! 🥚</span>
+                </div>
+                <p><span style="color: #ffcc00;">✧ COMMUNICATION DU STAFF ✧</span></p>
+                <p>Nous présentons nos plus plates excuses pour le désagrément concernant la pénalité initialement appliquée à <strong>THE INVISIBLE AFK</strong>.</p>
+                <p>Après réexamen, la pénalité a été annulée et 1 kill supplémentaire a été ajouté à leur score.</p>
+                <p style="margin-top: 10px; color: var(--secondary-color);">Merci pour votre compréhension et bonnes fêtes de Pâques à tous !</p>
+                <div style="text-align: center; margin-top: 15px;">
+                    <span style="font-size: 0.8em; color: var(--text-secondary);">(Le thème reviendra à la normale demain)</span>
+                </div>
             `;
             
             lobbyElement.appendChild(teamListElement);
