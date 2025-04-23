@@ -4,15 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>RÉSULTATS & RÉPARTITION - NATIONAL QUALIFIERS 2025</title>
+    <title>ÉQUIPES QUALIFIÉES - NATIONAL QUALIFIERS 2025</title>
     
     <link rel="icon" href="./assets/images/icon.ico" type="image/x-icon">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"
-          onerror="this.onerror=null;this.href='./assets/css/animate.min.css'">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;600&display=swap">
-    
-    <link rel="stylesheet" href="./assets/css/animate.min.css">
     
     <style>
         :root {
@@ -20,13 +15,10 @@
             --secondary-color: #00ffff;
             --accent-color: #ff5500;
             --dark-bg: rgba(10, 5, 20, 0.95);
-            --card-bg: rgba(40, 35, 60, 0.8);
+            --card-bg: rgba(40, 35, 60, 0.9);
             --text-color: #ffffff;
             --text-secondary: #cccccc;
-            --success-color: #00ff88;
             --qualif-color: #00ff88;
-            --elim-color: #ff3366;
-            --warning-color: #ffcc00;
             --final-color: #aa00ff;
         }
 
@@ -158,8 +150,8 @@
         }
 
         .logo-container {
-            width: min(120px, 30vw);
-            height: min(120px, 30vw);
+            width: min(150px, 30vw);
+            height: min(150px, 30vw);
             margin: 0 auto 1.5rem;
             border-radius: 50%;
             background: rgba(0,0,0,0.3);
@@ -167,16 +159,15 @@
             align-items: center;
             justify-content: center;
             border: 3px solid var(--primary-color);
-            box-shadow: 0 0 20px var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color);
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         .logo-img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 80%;
+            max-height: 80%;
             object-fit: contain;
-            padding: 15px;
         }
 
         h1 {
@@ -187,7 +178,8 @@
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+            letter-spacing: 1px;
         }
 
         .subtitle {
@@ -198,21 +190,137 @@
             text-transform: uppercase;
         }
 
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .countdown-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .countdown-timer {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .lobby {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .lobby-title {
+            background: linear-gradient(to right, var(--final-color), #6a00bb);
+            padding: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: white;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .final-table-header {
+            display: grid;
+            grid-template-columns: 100px minmax(200px, 1fr) 120px;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .team-list {
+            padding: 0;
+        }
+
+        .final-team {
+            display: grid;
+            grid-template-columns: 100px minmax(200px, 1fr) 120px;
+            padding: 1rem;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .final-team:nth-child(even) {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .final-team div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .final-team-rank {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+
+        .final-team-name {
+            justify-content: flex-start;
+            padding-left: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .final-team-points {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--qualif-color);
+            font-size: 1.1rem;
+        }
+
         .info-container {
             background: var(--card-bg);
             border-radius: 15px;
             padding: 1.5rem;
-            max-width: 800px;
             margin: 2rem auto;
             text-align: center;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
         }
 
         .info-container p {
             margin-bottom: 1rem;
             line-height: 1.6;
+            font-size: 1.05rem;
         }
 
         .highlight {
@@ -220,206 +328,10 @@
             font-weight: 600;
         }
 
-        .warning {
-            color: var(--warning-color);
-            font-weight: 600;
-        }
-
-        .lobby-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin: 3rem auto;
-            max-width: 1000px;
-        }
-
-        .lobby {
-            background: var(--card-bg);
-            border-radius: 15px;
-            width: 100%;
-            min-width: 300px;
-            max-width: 800px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-        }
-
-        .lobby-title {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            color: var(--primary-color);
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .final-title {
-            background: linear-gradient(to right, var(--final-color), #6a00bb);
-            color: white;
-        }
-
-        .table-header {
-            display: grid;
-            grid-template-columns: 50px minmax(150px, 2fr) 80px 80px 80px;
-            padding: 0.8rem 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-align: center;
-        }
-
-        .final-table-header {
-            display: grid;
-            grid-template-columns: minmax(200px, 1fr) minmax(200px, 2fr);
-            padding: 0.8rem 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-align: center;
-        }
-
-        .table-header div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .team-list {
-            padding: 0;
-        }
-
-        .team {
-            display: grid;
-            grid-template-columns: 50px minmax(150px, 2fr) 80px 80px 80px;
-            padding: 0.8rem 1rem;
-            margin: 0;
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .final-team {
-            display: grid;
-            grid-template-columns: minmax(200px, 1fr) minmax(200px, 2fr);
-            padding: 0.8rem 1rem;
-            margin: 0;
-            background: rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .team:nth-child(even), .final-team:nth-child(even) {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .team.qualified, .final-team {
-            border-left: 4px solid var(--qualif-color);
-            background: rgba(0, 255, 136, 0.1) !important;
-        }
-
-        .team.eliminated {
-            opacity: 0.7;
-        }
-
-        .team.penalized {
-            border-left: 4px solid var(--warning-color);
-            background: rgba(255, 204, 0, 0.1) !important;
-        }
-
-        .team div, .final-team div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .team-rank, .final-team-rank {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-        }
-
-        .team-name, .final-team-name {
-            justify-content: flex-start;
-            padding-left: 0.5rem;
-            text-align: left;
-        }
-
-        .team-stat {
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .team-points {
-            font-weight: 700;
-            color: var(--secondary-color);
-        }
-
-        .separator {
-            position: relative;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .separator::after {
-            content: "QUALIFICATION";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--card-bg);
-            padding: 0 1rem;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .lobby-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .lobby-nav-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--primary-color);
-            color: var(--text-color);
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .lobby-nav-btn.active {
-            background: var(--primary-color);
-            color: #000;
-            font-weight: bold;
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        .lobby-nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
-        }
-
         footer {
             text-align: center;
             margin-top: 3rem;
-            padding: 1rem;
+            padding: 1.5rem;
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
@@ -431,72 +343,59 @@
             box-shadow: none;
         }
         .degraded-mode .lobby,
-        .degraded-mode .info-container {
+        .degraded-mode .info-container,
+        .degraded-mode .countdown-container {
             backdrop-filter: none;
             background: rgba(40, 35, 60, 0.95);
         }
 
-        /* Animation spéciale Pâques */
-        @keyframes hop {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            25% { transform: translateY(-5px) rotate(5deg); }
-            75% { transform: translateY(-5px) rotate(-5deg); }
-        }
-
-        .team.qualified {
-            animation: hop 1s ease infinite;
-            animation-delay: calc(var(--order) * 0.1s);
-        }
-
         @media (max-width: 768px) {
             .overlay {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
-            .lobby {
-                min-width: 280px;
-            }
-            
-            .table-header,
-            .team {
-                grid-template-columns: 40px minmax(120px, 2fr) 70px 70px;
-            }
-            
-            .table-header div:nth-child(3),
-            .team div:nth-child(3) {
-                display: none;
-            }
-
             .final-table-header,
             .final-team {
-                grid-template-columns: minmax(150px, 1fr) minmax(150px, 2fr);
+                grid-template-columns: 80px minmax(150px, 1fr) 100px;
+                padding: 0.8rem;
+            }
+            
+            .final-team-name {
+                font-size: 1rem;
+            }
+            
+            .countdown-timer {
+                font-size: 1.8rem;
             }
         }
 
         @media (max-width: 480px) {
-            .table-header,
-            .team {
-                grid-template-columns: 30px minmax(100px, 2fr) 60px;
-                font-size: 0.9rem;
-                padding: 0.6rem 0.5rem;
+            .overlay {
+                padding: 1rem;
             }
             
-            .table-header div:nth-child(3),
-            .table-header div:nth-child(4),
-            .team div:nth-child(3),
-            .team div:nth-child(4) {
-                display: none;
-            }
-            
-            .team-name {
-                font-size: 0.85rem;
-            }
-
             .final-table-header,
             .final-team {
-                grid-template-columns: minmax(120px, 1fr) minmax(120px, 2fr);
+                grid-template-columns: 60px minmax(120px, 1fr) 80px;
+                padding: 0.6rem;
                 font-size: 0.9rem;
-                padding: 0.6rem 0.5rem;
+            }
+            
+            .final-team-rank {
+                font-size: 1rem;
+            }
+            
+            .final-team-name {
+                font-size: 0.9rem;
+                padding-left: 0.5rem;
+            }
+            
+            .countdown-timer {
+                font-size: 1.5rem;
+            }
+            
+            .info-container p {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -519,81 +418,82 @@
         
         <div class="header">
             <div class="logo-container">
-                <img class="logo-img" id="main-logo" alt="Logo organisateur">
+                <img class="logo-img" id="main-logo" alt="Logo National Qualifiers 2025">
             </div>
             
-            <h1>PHASE FINALE - RÉPARTITION DES SIÈGES</h1>
-            <p class="subtitle">NATIONAL QUALIFIERS 2025 - RÉSULTATS</p>
+            <h1>ÉQUIPES QUALIFIÉES POUR LA FINALE</h1>
+            <p class="subtitle">NATIONAL QUALIFIERS 2025</p>
         </div>
 
-        <div class="lobby-nav">
-            <button class="lobby-nav-btn active" id="btn-lobby-a">Lobby A</button>
-            <button class="lobby-nav-btn" id="btn-lobby-b">Lobby B</button>
-            <button class="lobby-nav-btn" id="btn-lobby-final">Équipes Qualifiées</button>
-        </div>
+        <div class="main-container">
+            <div class="countdown-container">
+                <div class="countdown-title">TEMPS RESTANT AVANT LA FINALE</div>
+                <div class="countdown-timer" id="countdown-timer"></div>
+                <div style="color: var(--text-secondary); font-size: 0.9rem;">Vendredi 25 Avril 2025 - 9h @ Stade Barea Mahamasina</div>
+            </div>
 
-        <div class="lobby-container">
-            <div class="lobby animate__animated animate__fadeIn" id="lobby-a"></div>
-            <div class="lobby animate__animated animate__fadeIn" id="lobby-b" style="display: none;"></div>
-            <div class="lobby animate__animated animate__fadeIn" id="lobby-final" style="display: none;"></div>
+            <div class="lobby">
+                <div class="lobby-title">12 ÉQUIPES QUALIFIÉES</div>
+                
+                <div class="final-table-header">
+                    <div>RANG</div>
+                    <div>NOM DE L'ÉQUIPE</div>
+                    <div>POINTS</div>
+                </div>
+                
+                <div class="team-list" id="final-teams-list"></div>
+            </div>
+
+            <div class="info-container">
+                <p><span class="highlight">FÉLICITATIONS</span> aux 12 équipes qualifiées pour la grande finale !</p>
+                <p>Les meilleures équipes des éliminatoires s'affronteront pour le titre au <span class="highlight">Stade Barea Mahamasina</span>.</p>
+                <p>Les équipes sont classées selon leur performance globale dans les matchs éliminatoires.</p>
+            </div>
         </div>
 
         <footer>
-            CREDIT: <strong>KIRITO</strong> | Mise à jour: <span id="last-update">--/--/---- --:--:--</span>
+            CRÉDIT: <strong>KIRITO</strong> | Mise à jour: <span id="last-update">--/--/---- --:--:--</span>
         </footer>
     </div>
 
     <script>
         const CONFIG = {
             logo: "./assets/images/logo.jpg",
-            minLoadingTime: 2000
+            minLoadingTime: 2000,
+            finalDate: '2025-04-25T09:00:00+03:00' // 9h heure de Madagascar (UTC+3)
         };
 
-        const TEAMS_DATA = {
-            "Lobby A": [
-                { rank: 1, name: "OLD GAMER", booyah: 2, kills: 60, points: 97 },
-                { rank: 2, name: "GOTHAM", booyah: 1, kills: 61, points: 88 },
-                { rank: 3, name: "NOOBSTORM", booyah: 1, kills: 39, points: 69 },
-                { rank: 4, name: "UNKNOW BRAIN", booyah: 0, kills: 39, points: 58 },
-                { rank: 5, name: "TEAM BABY", booyah: 0, kills: 30, points: 51 },
-                { rank: 6, name: "DARK PRIME", booyah: 0, kills: 19, points: 38 },
-                { rank: 7, name: "VOANJOBORY", booyah: 0, kills: 12, points: 35 },
-                { rank: 8, name: "THE BAD GUYS", booyah: 0, kills: 10, points: 32 },
-                { rank: 9, name: "NERV 667", booyah: 0, kills: 8, points: 24 },
-                { rank: 10, name: "HUNTER OF DREAMS", booyah: 0, kills: 4, points: 21 },
-                { rank: 11, name: "LES ORIGINELS", booyah: 0, kills: 10, points: 14 },
-                { rank: 12, name: "DREAD NOUGHT", booyah: 0, kills: 2, points: 5 }
-            ],
-            "Lobby B": [
-                { name: "AMBOHIPO STREET", booyah: 1, kills: 54, points: 87 },
-                { name: "EAZY GAMES", booyah: 1, kills: 44, points: 75 },
-                { name: "BRIGADE FANTÔME", booyah: 2, kills: 26, points: 58 },
-                { name: "MDG ESPORT", booyah: 0, kills: 27, points: 46 },
-                { name: "SUICIDE SQUAD", booyah: 0, kills: 25, points: 45 },
-                { name: "THE INVISIBLE AFK", booyah: 0, kills: 20, points: 41 },
-                { name: "CIPHER POL 0", booyah: 0, kills: 24, points: 36 },
-                { name: "INSANE UND", booyah: 0, kills: 13, points: 35 },
-                { name: "JOBA", booyah: 0, kills: 14, points: 29 },
-                { name: "DOOMBRINGERS", booyah: 0, kills: 14, points: 26 },
-                { name: "DEAD", booyah: 0, kills: 8, points: 21 },
-                { name: "MADA GOAT ESPORT", booyah: 0, kills: 4, points: 8 }
-            ],
-            "Lobby Final": []
-        };
+        const TEAMS_DATA = [
+            { rank: 1, name: "OLD GAMER", points: 97 },
+            { rank: 2, name: "GOTHAM", points: 88 },
+            { rank: 3, name: "AMBOHIPO STREET", points: 87 },
+            { rank: 4, name: "EAZY GAMES", points: 75 },
+            { rank: 5, name: "NOOBSTORM", points: 69 },
+            { rank: 6, name: "BRIGADE FANTÔME", points: 58 },
+            { rank: 7, name: "UNKNOW BRAIN", points: 58 },
+            { rank: 8, name: "MDG ESPORT", points: 46 },
+            { rank: 9, name: "SUICIDE SQUAD", points: 45 },
+            { rank: 10, name: "THE INVISIBLE AFK", points: 41 },
+            { rank: 11, name: "TEAM BABY", points: 51 },
+            { rank: 12, name: "DARK PRIME", points: 38 }
+        ];
 
-        // Création du lobby final avec les 12 équipes qualifiées
-        function prepareFinalLobby() {
-            // Récupérer les 6 meilleures équipes de chaque lobby
-            const lobbyATeams = TEAMS_DATA["Lobby A"].slice(0, 6);
-            const lobbyBTeams = [...TEAMS_DATA["Lobby B"]].sort((a, b) => b.points - a.points).slice(0, 6);
+        // Fonction de compte à rebours pour la finale
+        function updateCountdown() {
+            const finalDate = new Date(CONFIG.finalDate);
+            const now = new Date();
+            const diff = finalDate - now;
             
-            // Fusionner et trier par points décroissants
-            TEAMS_DATA["Lobby Final"] = [...lobbyATeams, ...lobbyBTeams]
-                .sort((a, b) => b.points - a.points)
-                .map((team, index) => ({
-                    ...team,
-                    rank: index + 1
-                }));
+            if (diff <= 0) {
+                return "LA FINALE EST EN COURS !";
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            return `${days}j ${hours}h ${minutes}m ${seconds}s`;
         }
 
         function simulateLoading() {
@@ -642,14 +542,10 @@
         }
         
         function initSite() {
-            prepareFinalLobby();
             loadLogo();
-            displayLobbyA();
-            displayLobbyB();
-            displayFinalLobby();
-            setupNavigation();
+            displayFinalTeams();
+            setupCountdown();
             createParticles();
-            checkAnimateCSS();
             updateTimestamp();
         }
 
@@ -687,213 +583,31 @@
             img.src = CONFIG.logo;
         }
 
-        function displayLobbyA() {
-            const lobbyContainer = document.getElementById('lobby-a');
-            lobbyContainer.innerHTML = '';
+        function displayFinalTeams() {
+            const teamListElement = document.getElementById('final-teams-list');
+            teamListElement.innerHTML = '';
             
-            const lobbyElement = document.createElement('div');
-            lobbyElement.className = 'lobby';
-            
-            const titleElement = document.createElement('div');
-            titleElement.className = 'lobby-title';
-            titleElement.textContent = 'Lobby A - CLASSEMENT FINAL';
-            lobbyElement.appendChild(titleElement);
-            
-            const headerElement = document.createElement('div');
-            headerElement.className = 'table-header';
-            headerElement.innerHTML = `
-                <div>#</div>
-                <div>TEAM NAME</div>
-                <div>BOOYAH</div>
-                <div>KILLS</div>
-                <div>T.PTS</div>
-            `;
-            lobbyElement.appendChild(headerElement);
-            
-            const teamListElement = document.createElement('div');
-            teamListElement.className = 'team-list';
-            
-            TEAMS_DATA["Lobby A"].forEach((team, index) => {
+            TEAMS_DATA.forEach((team, index) => {
                 const teamElement = document.createElement('div');
-                teamElement.className = `team ${team.rank <= 6 ? 'qualified' : 'eliminated'}`;
-                
-                teamElement.innerHTML = `
-                    <div class="team-rank">${team.rank}</div>
-                    <div class="team-name">${team.name}</div>
-                    <div class="team-stat">${team.booyah}</div>
-                    <div class="team-stat">${team.kills}</div>
-                    <div class="team-stat team-points">${team.points}</div>
-                `;
-                
-                if (team.rank === 6) {
-                    const separator = document.createElement('div');
-                    separator.className = 'separator';
-                    teamListElement.appendChild(teamElement);
-                    teamListElement.appendChild(separator);
-                } else {
-                    teamListElement.appendChild(teamElement);
-                }
-            });
-            
-            lobbyElement.appendChild(teamListElement);
-            lobbyContainer.appendChild(lobbyElement);
-        }
-
-        function displayLobbyB() {
-            const lobbyContainer = document.getElementById('lobby-b');
-            lobbyContainer.innerHTML = '';
-            
-            const lobbyElement = document.createElement('div');
-            lobbyElement.className = 'lobby';
-            
-            const titleElement = document.createElement('div');
-            titleElement.className = 'lobby-title';
-            titleElement.textContent = 'Lobby B - CLASSEMENT FINAL';
-            lobbyElement.appendChild(titleElement);
-            
-            const headerElement = document.createElement('div');
-            headerElement.className = 'table-header';
-            headerElement.innerHTML = `
-                <div>#</div>
-                <div>TEAM NAME</div>
-                <div>BOOYAH</div>
-                <div>KILLS</div>
-                <div>T.PTS</div>
-            `;
-            lobbyElement.appendChild(headerElement);
-            
-            const teamListElement = document.createElement('div');
-            teamListElement.className = 'team-list';
-            
-            const sortedTeams = [...TEAMS_DATA["Lobby B"]].sort((a, b) => b.points - a.points);
-            
-            sortedTeams.forEach((team, index) => {
-                const teamElement = document.createElement('div');
-                teamElement.className = `team ${index < 6 ? 'qualified' : 'eliminated'}`;
-                teamElement.style.setProperty('--order', index);
-                
-                teamElement.innerHTML = `
-                    <div class="team-rank">${index + 1}</div>
-                    <div class="team-name">${team.name}</div>
-                    <div class="team-stat">${team.booyah}</div>
-                    <div class="team-stat">${team.kills}</div>
-                    <div class="team-stat team-points">${team.points}</div>
-                `;
-                
-                if (index === 5) {
-                    const separator = document.createElement('div');
-                    separator.className = 'separator';
-                    teamListElement.appendChild(teamElement);
-                    teamListElement.appendChild(separator);
-                } else {
-                    teamListElement.appendChild(teamElement);
-                }
-            });
-            
-            const infoElement = document.createElement('div');
-            infoElement.className = 'info-container animate__animated animate__pulse';
-            infoElement.style.background = 'linear-gradient(to right, rgba(94, 53, 177, 0.8), rgba(28, 176, 246, 0.8))';
-            infoElement.style.border = '1px solid gold';
-            infoElement.innerHTML = `
-                <div style="text-align: center; margin-bottom: 15px;">
-                    <span style="color: gold; font-size: 1.5em;">🐰 JOYEUSES PÂQUES ! 🥚</span>
-                </div>
-                <p><span style="color: #ffcc00;">✧ COMMUNICATION DU STAFF ✧</span></p>
-                <p>Nous présentons nos plus plates excuses pour le désagrément concernant la pénalité initialement appliquée à la team <strong>THE INVISIBLE AFK</strong>.</p>
-                <p>Après réexamen, la pénalité a été annulée et 1 kill supplémentaire a été ajouté à leur score.</p>
-                <p style="margin-top: 10px; color: var(--secondary-color);">Merci pour votre compréhension et bonnes fêtes de Pâques à tous !</p>
-                <div style="text-align: center; margin-top: 15px;">
-                    <span style="font-size: 0.8em; color: var(--text-secondary);"></span>
-                </div>
-            `;
-            
-            lobbyElement.appendChild(teamListElement);
-            lobbyElement.appendChild(infoElement);
-            lobbyContainer.appendChild(lobbyElement);
-        }
-
-        function displayFinalLobby() {
-            const lobbyContainer = document.getElementById('lobby-final');
-            lobbyContainer.innerHTML = '';
-            
-            const lobbyElement = document.createElement('div');
-            lobbyElement.className = 'lobby';
-            
-            const titleElement = document.createElement('div');
-            titleElement.className = 'lobby-title final-title';
-            titleElement.textContent = '12 ÉQUIPES QUALIFIÉES POUR LA FINALE';
-            lobbyElement.appendChild(titleElement);
-            
-            const headerElement = document.createElement('div');
-            headerElement.className = 'final-table-header';
-            headerElement.innerHTML = `
-                <div>SIÈGE POUR LE LOBBY FINAL</div>
-                <div>TEAM NAME</div>
-            `;
-            lobbyElement.appendChild(headerElement);
-            
-            const teamListElement = document.createElement('div');
-            teamListElement.className = 'team-list';
-            
-            TEAMS_DATA["Lobby Final"].forEach((team, index) => {
-                const teamElement = document.createElement('div');
-                teamElement.className = `final-team`;
+                teamElement.className = 'final-team';
                 
                 teamElement.innerHTML = `
                     <div class="final-team-rank">${team.rank}</div>
                     <div class="final-team-name">${team.name}</div>
+                    <div class="final-team-points">${team.points}</div>
                 `;
                 
                 teamListElement.appendChild(teamElement);
             });
-            
-            const infoElement = document.createElement('div');
-            infoElement.className = 'info-container';
-            infoElement.innerHTML = `
-                <p><span class="highlight">FÉLICITATIONS</span> aux 12 équipes qualifiées pour la grande finale !</p>
-                <p>Rendez-vous au <span class="highlight">Stade Barea Mahamasina</span> pour le tournoi final où les meilleures équipes s'affronteront pour le titre.</p>
-                <p>Les équipes sont reparties ici selon leur performance globale dans les matchs éliminatoires.</p>
-            `;
-            
-            lobbyElement.appendChild(teamListElement);
-            lobbyElement.appendChild(infoElement);
-            lobbyContainer.appendChild(lobbyElement);
         }
 
-        function setupNavigation() {
-            const btnLobbyA = document.getElementById('btn-lobby-a');
-            const btnLobbyB = document.getElementById('btn-lobby-b');
-            const btnLobbyFinal = document.getElementById('btn-lobby-final');
-            const lobbyA = document.getElementById('lobby-a');
-            const lobbyB = document.getElementById('lobby-b');
-            const lobbyFinal = document.getElementById('lobby-final');
+        function setupCountdown() {
+            function updateTimer() {
+                document.getElementById('countdown-timer').textContent = updateCountdown();
+            }
             
-            btnLobbyA.addEventListener('click', () => {
-                btnLobbyA.classList.add('active');
-                btnLobbyB.classList.remove('active');
-                btnLobbyFinal.classList.remove('active');
-                lobbyA.style.display = 'block';
-                lobbyB.style.display = 'none';
-                lobbyFinal.style.display = 'none';
-            });
-            
-            btnLobbyB.addEventListener('click', () => {
-                btnLobbyB.classList.add('active');
-                btnLobbyA.classList.remove('active');
-                btnLobbyFinal.classList.remove('active');
-                lobbyA.style.display = 'none';
-                lobbyB.style.display = 'block';
-                lobbyFinal.style.display = 'none';
-            });
-            
-            btnLobbyFinal.addEventListener('click', () => {
-                btnLobbyFinal.classList.add('active');
-                btnLobbyA.classList.remove('active');
-                btnLobbyB.classList.remove('active');
-                lobbyA.style.display = 'none';
-                lobbyB.style.display = 'none';
-                lobbyFinal.style.display = 'block';
-            });
+            updateTimer();
+            setInterval(updateTimer, 1000);
         }
 
         function createParticles() {
@@ -914,19 +628,6 @@
                 }
             } catch (e) {
                 console.error("Erreur dans createParticles:", e);
-            }
-        }
-        
-        function checkAnimateCSS() {
-            try {
-                if (!document.querySelector('.animate__animated')) {
-                    const fallbackCSS = document.createElement('link');
-                    fallbackCSS.rel = 'stylesheet';
-                    fallbackCSS.href = './assets/css/animate.min.css';
-                    document.head.appendChild(fallbackCSS);
-                }
-            } catch (e) {
-                console.error("Erreur dans checkAnimateCSS:", e);
             }
         }
 
