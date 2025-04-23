@@ -15,12 +15,13 @@
             --secondary-color: #00ffff;
             --accent-color: #ff5500;
             --dark-bg: #0a0515;
-            --card-bg: rgba(30, 20, 50, 0.92);
+            --card-bg: rgba(30, 20, 50, 0.95);
             --text-color: #ffffff;
             --text-secondary: #b8b8b8;
             --qualif-color: #00ff88;
             --final-color: #9d4dff;
             --header-gradient: linear-gradient(135deg, #6e00ff 0%, #ff00f5 100%);
+            --card-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -229,9 +230,9 @@
             padding: 2rem 1.5rem;
             margin: 0 auto 2rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: var(--card-shadow);
             border: 1px solid rgba(157, 77, 255, 0.3);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             position: relative;
             overflow: hidden;
         }
@@ -276,9 +277,9 @@
             background: var(--card-bg);
             border-radius: 15px;
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: var(--card-shadow);
             border: 1px solid rgba(157, 77, 255, 0.3);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             overflow: hidden;
             margin-bottom: 2rem;
             position: relative;
@@ -342,6 +343,7 @@
             background: rgba(255, 255, 255, 0.03);
             transition: all 0.3s ease;
             position: relative;
+            align-items: center;
         }
 
         .final-team:nth-child(even) {
@@ -352,26 +354,25 @@
             background: rgba(157, 77, 255, 0.1);
         }
 
-        .final-team div {
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
-
         .final-team-siege {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 1.2rem;
             color: var(--secondary-color);
+            text-align: center;
+            display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         .final-team-name {
-            justify-content: flex-start;
-            padding-left: 1rem;
             font-weight: 600;
             font-size: 1.1rem;
             letter-spacing: 0.5px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .info-container {
@@ -380,9 +381,9 @@
             padding: 2rem;
             margin: 2rem auto;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: var(--card-shadow);
             border: 1px solid rgba(157, 77, 255, 0.3);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             position: relative;
         }
 
@@ -407,6 +408,11 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
+        }
+
+        .warning {
+            color: var(--warning-color);
+            font-weight: 600;
         }
 
         footer {
@@ -479,7 +485,6 @@
             
             .final-team-name {
                 font-size: 0.95rem;
-                padding-left: 0.5rem;
             }
             
             .countdown-timer {
@@ -542,8 +547,8 @@
 
             <div class="info-container">
                 <p><span class="highlight">Félicitations</span> aux 12 équipes qui ont obtenu leur place pour la grande finale !</p>
-                <p>Le tournoi final promet des affrontements épiques entre les meilleures formations du pays.</p>
-                <p>Les sièges ont été attribués selon les performances lors des phases éliminatoires.</p>
+                <p>Suite à un manque de professionnalisme, l'équipe <span class="warning">GOTHAM</span> a été disqualifiée et remplacée par <span class="highlight">CIPHER POL 0</span> selon l'article 12.5 du règlement.</p>
+                <p>Les sièges ont été réattribués selon les performances globales durant les phases éliminatoires.</p>
             </div>
         </div>
 
@@ -559,20 +564,30 @@
             finalDate: '2025-04-25T09:00:00+03:00' // 9h heure de Madagascar (UTC+3)
         };
 
-        const TEAMS_DATA = [
-            { siege: 1, name: "OLD GAMER" },
-            { siege: 2, name: "GOTHAM" },
-            { siege: 3, name: "AMBOHIPO STREET" },
-            { siege: 4, name: "EAZY GAMES" },
-            { siege: 5, name: "NOOBSTORM" },
-            { siege: 6, name: "BRIGADE FANTÔME" },
-            { siege: 7, name: "UNKNOW BRAIN" },
-            { siege: 8, name: "MDG ESPORT" },
-            { siege: 9, name: "SUICIDE SQUAD" },
-            { siege: 10, name: "THE INVISIBLE AFK" },
-            { siege: 11, name: "TEAM BABY" },
-            { siege: 12, name: "DARK PRIME" }
+        // Données des équipes avec leurs performances originales
+        const TEAMS_PERFORMANCE = [
+            { name: "OLD GAMER", points: 97 },
+            { name: "AMBOHIPO STREET", points: 87 },
+            { name: "EAZY GAMES", points: 75 },
+            { name: "NOOBSTORM", points: 69 },
+            { name: "BRIGADE FANTÔME", points: 58 },
+            { name: "UNKNOW BRAIN", points: 58 },
+            { name: "MDG ESPORT", points: 46 },
+            { name: "SUICIDE SQUAD", points: 45 },
+            { name: "THE INVISIBLE AFK", points: 41 },
+            { name: "CIPHER POL 0", points: 36 }, // Remplace GOTHAM (88 points)
+            { name: "TEAM BABY", points: 51 },
+            { name: "DARK PRIME", points: 38 }
         ];
+
+        // Classement final basé sur les performances
+        const FINAL_TEAMS = [...TEAMS_PERFORMANCE]
+            .sort((a, b) => b.points - a.points)
+            .map((team, index) => ({
+                siege: index + 1,
+                name: team.name,
+                points: team.points
+            }));
 
         // Fonction de compte à rebours pour la finale
         function updateCountdown() {
@@ -682,7 +697,7 @@
             const teamListElement = document.getElementById('final-teams-list');
             teamListElement.innerHTML = '';
             
-            TEAMS_DATA.forEach((team, index) => {
+            FINAL_TEAMS.forEach((team) => {
                 const teamElement = document.createElement('div');
                 teamElement.className = 'final-team';
                 
