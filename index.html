@@ -1,804 +1,736 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
-    />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ÉQUIPES QUALIFIÉES - NATIONAL QUALIFIERS 2025</title>
-
-    <link rel="icon" href="./assets/images/icon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;600&display=swap"
-    />
-
+    
+    <link rel="icon" href="./assets/images/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;600&display=swap">
+    
     <style>
-      :root {
-        --primary-color: #ff00ff;
-        --secondary-color: #00ffff;
-        --accent-color: #ff5500;
-        --dark-bg: #0a0515;
-        --card-bg: rgba(30, 20, 50, 0.92);
-        --text-color: #ffffff;
-        --text-secondary: #b8b8b8;
-        --qualif-color: #00ff88;
-        --final-color: #9d4dff;
-        --header-gradient: linear-gradient(135deg, #6e00ff 0%, #ff00f5 100%);
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: "Montserrat", sans-serif;
-        background: var(--dark-bg);
-        color: var(--text-color);
-        min-height: 100vh;
-        overflow-x: hidden;
-        touch-action: manipulation;
-        background-image: radial-gradient(
-            circle at 20% 30%,
-            rgba(110, 0, 255, 0.15) 0%,
-            transparent 25%
-          ),
-          radial-gradient(
-            circle at 80% 70%,
-            rgba(255, 0, 245, 0.15) 0%,
-            transparent 25%
-          );
-      }
-
-      .loader-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--dark-bg);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        transition: opacity 0.5s ease-out;
-      }
-
-      .loader {
-        width: 80px;
-        height: 80px;
-        position: relative;
-        margin-bottom: 20px;
-      }
-
-      .loader-inner {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 4px solid transparent;
-        border-top-color: var(--primary-color);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      .loader-inner:nth-child(2) {
-        border-top-color: var(--secondary-color);
-        animation-delay: 0.2s;
-      }
-
-      .loader-inner:nth-child(3) {
-        border-top-color: var(--accent-color);
-        animation-delay: 0.4s;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+        :root {
+            --primary-color: #ff00ff;
+            --secondary-color: #00ffff;
+            --accent-color: #ff5500;
+            --dark-bg: #0a0515;
+            --card-bg: rgba(30, 20, 50, 0.92);
+            --text-color: #ffffff;
+            --text-secondary: #b8b8b8;
+            --qualif-color: #00ff88;
+            --final-color: #9d4dff;
+            --header-gradient: linear-gradient(135deg, #6e00ff 0%, #ff00f5 100%);
         }
-        100% {
-          transform: rotate(360deg);
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-      }
 
-      .loader-text {
-        color: var(--text-color);
-        font-family: "Orbitron", sans-serif;
-        font-size: clamp(1rem, 4vw, 1.2rem);
-        text-align: center;
-        margin-top: 20px;
-        letter-spacing: 2px;
-      }
-
-      .loader-progress {
-        width: min(200px, 80%);
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        margin-top: 20px;
-        border-radius: 2px;
-        overflow: hidden;
-      }
-
-      .loader-progress-bar {
-        height: 100%;
-        width: 0%;
-        background: var(--header-gradient);
-        transition: width 0.3s ease;
-      }
-
-      .overlay {
-        min-height: 100vh;
-        padding: 2rem 1rem;
-        position: relative;
-        overflow: hidden;
-        opacity: 0;
-        transition: opacity 0.5s ease-in;
-      }
-
-      .glow-effect {
-        position: fixed;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(110, 0, 255, 0.4) 0%,
-          transparent 70%
-        );
-        filter: blur(60px);
-        z-index: 0;
-        pointer-events: none;
-      }
-
-      .glow-1 {
-        top: -100px;
-        left: -100px;
-      }
-
-      .glow-2 {
-        bottom: -100px;
-        right: -100px;
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 245, 0.4) 0%,
-          transparent 70%
-        );
-      }
-
-      .header {
-        text-align: center;
-        padding: 1rem 1rem 2rem;
-        position: relative;
-        z-index: 2;
-      }
-
-      .logo-container {
-        width: min(180px, 40vw);
-        height: min(180px, 40vw);
-        margin: 0 auto 1.5rem;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 3px solid var(--primary-color);
-        box-shadow: 0 0 40px rgba(157, 77, 255, 0.6);
-        overflow: hidden;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .logo-container::after {
-        content: "";
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        border-radius: 50%;
-        background: var(--header-gradient);
-        z-index: -1;
-        animation: rotate 10s linear infinite;
-      }
-
-      @keyframes rotate {
-        0% {
-          transform: rotate(0deg);
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(110, 0, 255, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 245, 0.15) 0%, transparent 25%);
         }
-        100% {
-          transform: rotate(360deg);
+
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
         }
-      }
 
-      .logo-img {
-        max-width: 70%;
-        max-height: 70%;
-        object-fit: contain;
-        background: var(--dark-bg);
-        border-radius: 50%;
-        padding: 10px;
-      }
+        .loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin-bottom: 20px;
+        }
 
-      h1 {
-        font-family: "Orbitron", sans-serif;
-        font-size: clamp(1.8rem, 6vw, 2.5rem);
-        font-weight: 700;
-        margin: 1rem 0 0.5rem;
-        background: var(--header-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 20px rgba(157, 77, 255, 0.4);
-        letter-spacing: 1px;
-        line-height: 1.2;
-      }
+        .loader-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-      .subtitle {
-        color: var(--text-secondary);
-        font-size: clamp(1rem, 3.5vw, 1.2rem);
-        letter-spacing: 2px;
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
+        .loader-inner:nth-child(2) {
+            border-top-color: var(--secondary-color);
+            animation-delay: 0.2s;
+        }
 
-      .main-container {
-        max-width: 800px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 2;
-      }
+        .loader-inner:nth-child(3) {
+            border-top-color: var(--accent-color);
+            animation-delay: 0.4s;
+        }
 
-      .countdown-container {
-        background: var(--card-bg);
-        border-radius: 15px;
-        padding: 2rem 1.5rem;
-        margin: 0 auto 2rem;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(157, 77, 255, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
-      }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-      .countdown-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--header-gradient);
-      }
+        .loader-text {
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            text-align: center;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
 
-      .countdown-title {
-        font-family: "Orbitron", sans-serif;
-        color: var(--text-secondary);
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-      }
+        .loader-progress {
+            width: min(200px, 80%);
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
 
-      .countdown-timer {
-        font-family: "Orbitron", sans-serif;
-        color: var(--primary-color);
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin: 0.5rem 0;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-      }
+        .loader-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--header-gradient);
+            transition: width 0.3s ease;
+        }
 
-      .event-info {
-        color: var(--text-secondary);
-        font-size: 0.95rem;
-        margin-top: 0.5rem;
-        letter-spacing: 1px;
-      }
-
-      .lobby {
-        background: var(--card-bg);
-        border-radius: 15px;
-        width: 100%;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(157, 77, 255, 0.3);
-        backdrop-filter: blur(10px);
-        overflow: hidden;
-        margin-bottom: 2rem;
-        position: relative;
-      }
-
-      .lobby::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--header-gradient);
-      }
-
-      .lobby-title {
-        background: transparent;
-        padding: 1.5rem;
-        font-family: "Orbitron", sans-serif;
-        font-size: 1.4rem;
-        color: white;
-        text-align: center;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        position: relative;
-      }
-
-      .lobby-title::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 25%;
-        right: 25%;
-        height: 2px;
-        background: linear-gradient(
-          to right,
-          transparent,
-          var(--final-color),
-          transparent
-        );
-      }
-
-      .final-table-header {
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        padding: 1.2rem 1.5rem;
-        background: rgba(0, 0, 0, 0.3);
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-        text-align: center;
-        font-family: "Orbitron", sans-serif;
-        color: var(--text-secondary);
-      }
-
-      .team-list {
-        padding: 0;
-      }
-
-      .final-team {
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        padding: 1.2rem 1.5rem;
-        margin: 0;
-        background: rgba(255, 255, 255, 0.03);
-        transition: all 0.3s ease;
-        position: relative;
-      }
-
-      .final-team:nth-child(even) {
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .final-team:hover {
-        background: rgba(157, 77, 255, 0.1);
-      }
-
-      .final-team div {
-        display: flex;
-        align-items: center;
-        text-align: left;
-      }
-
-      .final-team-siege {
-        font-family: "Orbitron", sans-serif;
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--secondary-color);
-        justify-content: center;
-      }
-
-      .final-team-name {
-        justify-content: flex-start;
-        padding-left: 1rem;
-        font-weight: 600;
-        font-size: 1.1rem;
-        letter-spacing: 0.5px;
-      }
-
-      .info-container {
-        background: var(--card-bg);
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 2rem auto;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(157, 77, 255, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-      }
-
-      .info-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--header-gradient);
-      }
-
-      .info-container p {
-        margin-bottom: 1.2rem;
-        line-height: 1.6;
-        font-size: 1.05rem;
-      }
-
-      .highlight {
-        background: linear-gradient(
-          to right,
-          var(--primary-color),
-          var(--secondary-color)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 700;
-      }
-
-      footer {
-        text-align: center;
-        margin-top: 3rem;
-        padding: 1.5rem;
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-        position: relative;
-      }
-
-      footer::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 25%;
-        right: 25%;
-        height: 1px;
-        background: linear-gradient(
-          to right,
-          transparent,
-          rgba(157, 77, 255, 0.5),
-          transparent
-        );
-      }
-
-      .degraded-mode {
-        animation: none !important;
-      }
-      .degraded-mode .logo-container {
-        box-shadow: none;
-      }
-      .degraded-mode .lobby,
-      .degraded-mode .info-container,
-      .degraded-mode .countdown-container {
-        backdrop-filter: none;
-        background: rgba(30, 20, 50, 0.95);
-      }
-
-      @media (max-width: 768px) {
         .overlay {
-          padding: 1.5rem;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
         }
 
-        .final-table-header,
-        .final-team {
-          grid-template-columns: 80px 1fr;
-          padding: 1rem;
+        .glow-effect {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(110, 0, 255, 0.4) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .final-team-name {
-          font-size: 1rem;
+        .glow-1 {
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(255, 0, 245, 0.4) 0%, transparent 70%);
+        }
+
+        .header {
+            text-align: center;
+            padding: 1rem 1rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            width: min(180px, 40vw);
+            height: min(180px, 40vw);
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 40px rgba(157, 77, 255, 0.6);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: var(--header-gradient);
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+            background: var(--dark-bg);
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 700;
+            margin: 1rem 0 0.5rem;
+            background: var(--header-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(157, 77, 255, 0.4);
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .countdown-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            margin: 0 auto 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(157, 77, 255, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--header-gradient);
+        }
+
+        .countdown-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
         .countdown-timer {
-          font-size: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
         }
-      }
 
-      @media (max-width: 480px) {
-        .overlay {
-          padding: 1rem;
+        .event-info {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
         }
 
-        .final-table-header,
+        .lobby {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(157, 77, 255, 0.3);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .lobby::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--header-gradient);
+        }
+
+        .lobby-title {
+            background: transparent;
+            padding: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: white;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .lobby-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--final-color), transparent);
+        }
+
+        .final-table-header {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-secondary);
+        }
+
+        .team-list {
+            padding: 0;
+        }
+
         .final-team {
-          grid-template-columns: 60px 1fr;
-          padding: 0.8rem;
-          font-size: 0.9rem;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            padding: 1.2rem 1.5rem;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .final-team:nth-child(even) {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .final-team:hover {
+            background: rgba(157, 77, 255, 0.1);
+        }
+
+        .final-team div {
+            display: flex;
+            align-items: center;
+            text-align: left;
         }
 
         .final-team-siege {
-          font-size: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            justify-content: center;
         }
 
         .final-team-name {
-          font-size: 0.95rem;
-          padding-left: 0.5rem;
-        }
-
-        .countdown-timer {
-          font-size: 1.8rem;
+            justify-content: flex-start;
+            padding-left: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
         }
 
         .info-container {
-          padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(157, 77, 255, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .info-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--header-gradient);
         }
 
         .info-container p {
-          font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            font-size: 1.05rem;
         }
-      }
+
+        .highlight {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 25%;
+            right: 25%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(157, 77, 255, 0.5), transparent);
+        }
+
+        .degraded-mode {
+            animation: none !important;
+        }
+        .degraded-mode .logo-container {
+            box-shadow: none;
+        }
+        .degraded-mode .lobby,
+        .degraded-mode .info-container,
+        .degraded-mode .countdown-container {
+            backdrop-filter: none;
+            background: rgba(30, 20, 50, 0.95);
+        }
+
+        @media (max-width: 768px) {
+            .overlay {
+                padding: 1.5rem;
+            }
+            
+            .final-table-header,
+            .final-team {
+                grid-template-columns: 80px 1fr;
+                padding: 1rem;
+            }
+            
+            .final-team-name {
+                font-size: 1rem;
+            }
+            
+            .countdown-timer {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .overlay {
+                padding: 1rem;
+            }
+            
+            .final-table-header,
+            .final-team {
+                grid-template-columns: 60px 1fr;
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .final-team-siege {
+                font-size: 1rem;
+            }
+            
+            .final-team-name {
+                font-size: 0.95rem;
+                padding-left: 0.5rem;
+            }
+            
+            .countdown-timer {
+                font-size: 1.8rem;
+            }
+            
+            .info-container {
+                padding: 1.5rem;
+            }
+            
+            .info-container p {
+                font-size: 0.95rem;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="loader-overlay" id="loader">
-      <div class="loader">
-        <div class="loader-inner"></div>
-        <div class="loader-inner"></div>
-        <div class="loader-inner"></div>
-      </div>
-      <div class="loader-text">CHARGEMENT EN COURS...</div>
-      <div class="loader-progress">
-        <div class="loader-progress-bar" id="loader-progress"></div>
-      </div>
+        <div class="loader">
+            <div class="loader-inner"></div>
+            <div class="loader-inner"></div>
+            <div class="loader-inner"></div>
+        </div>
+        <div class="loader-text">CHARGEMENT EN COURS...</div>
+        <div class="loader-progress">
+            <div class="loader-progress-bar" id="loader-progress"></div>
+        </div>
     </div>
 
     <div class="overlay" id="main-content">
-      <div class="glow-effect glow-1"></div>
-      <div class="glow-effect glow-2"></div>
-
-      <div class="header">
-        <div class="logo-container">
-          <img
-            class="logo-img"
-            id="main-logo"
-            alt="Logo National Qualifiers 2025"
-          />
+        <div class="glow-effect glow-1"></div>
+        <div class="glow-effect glow-2"></div>
+        
+        <div class="header">
+            <div class="logo-container">
+                <img class="logo-img" id="main-logo" alt="Logo National Qualifiers 2025">
+            </div>
+            
+            <h1>ÉQUIPES QUALIFIÉES</h1>
+            <p class="subtitle">NATIONAL QUALIFIERS 2025</p>
         </div>
 
-        <h1>ÉQUIPES QUALIFIÉES</h1>
-        <p class="subtitle">NATIONAL QUALIFIERS 2025</p>
-      </div>
+        <div class="main-container">
+            <div class="countdown-container">
+                <div class="countdown-title">COMPTE À REBOURS FINALE</div>
+                <div class="countdown-timer" id="countdown-timer"></div>
+                <div class="event-info">25 Avril 2025 - 9h @ Stade Barea Mahamasina</div>
+            </div>
 
-      <div class="main-container">
-        <div class="countdown-container">
-          <div class="countdown-title">COMPTE À REBOURS FINALE</div>
-          <div class="countdown-timer" id="countdown-timer"></div>
-          <div class="event-info">
-            25 Avril 2025 - 9h @ Stade Barea Mahamasina
-          </div>
+            <div class="lobby">
+                <div class="lobby-title">Liste des équipes qualifiées</div>
+                
+                <div class="final-table-header">
+                    <div>SIÈGE</div>
+                    <div>NOM DE L'ÉQUIPE</div>
+                </div>
+                
+                <div class="team-list" id="final-teams-list"></div>
+            </div>
+
+            <div class="info-container">
+                <p><span class="highlight">Félicitations</span> aux 12 équipes qui ont obtenu leur place pour la grande finale !</p>
+                <p>Le tournoi final promet des affrontements épiques entre les meilleures formations du pays.</p>
+                <p>Les sièges ont été attribués selon les performances lors des phases éliminatoires.</p>
+            </div>
         </div>
 
-        <div class="lobby">
-          <div class="lobby-title">Liste des équipes qualifiées</div>
-
-          <div class="final-table-header">
-            <div>SIÈGE</div>
-            <div>NOM DE L'ÉQUIPE</div>
-          </div>
-
-          <div class="team-list" id="final-teams-list"></div>
-        </div>
-
-        <div class="info-container">
-          <p>
-            <span class="highlight">Félicitations</span> aux 12 équipes qui ont
-            obtenu leur place pour la grande finale !
-          </p>
-          <p>
-            Le tournoi final promet des affrontements épiques entre les
-            meilleures formations du pays.
-          </p>
-          <p>
-            Les sièges ont été attribués selon les performances lors des phases
-            éliminatoires.
-          </p>
-        </div>
-      </div>
-
-      <footer>
-        CRÉDIT: <strong>KIRITO</strong> | Mise à jour:
-        <span id="last-update">--/--/---- --:--:--</span>
-      </footer>
+        <footer>
+            CRÉDIT: <strong>KIRITO</strong> | Mise à jour: <span id="last-update">--/--/---- --:--:--</span>
+        </footer>
     </div>
 
     <script>
-      const CONFIG = {
-        logo: "./assets/images/logo.jpg",
-        minLoadingTime: 2000,
-        finalDate: "2025-04-25T09:00:00+03:00", // 9h heure de Madagascar (UTC+3)
-      };
-
-      const TEAMS_DATA = [
-        { siege: 1, name: "OLD GAMER" },
-        { siege: 2, name: "GOTHAM" },
-        { siege: 3, name: "AMBOHIPO STREET" },
-        { siege: 4, name: "EAZY GAMES" },
-        { siege: 5, name: "NOOBSTORM" },
-        { siege: 6, name: "BRIGADE FANTÔME" },
-        { siege: 7, name: "UNKNOW BRAIN" },
-        { siege: 8, name: "MDG ESPORT" },
-        { siege: 9, name: "SUICIDE SQUAD" },
-        { siege: 10, name: "THE INVISIBLE AFK" },
-        { siege: 11, name: "TEAM BABY" },
-        { siege: 12, name: "DARK PRIME" },
-      ];
-
-      // Fonction de compte à rebours pour la finale
-      function updateCountdown() {
-        const finalDate = new Date(CONFIG.finalDate);
-        const now = new Date();
-        const diff = finalDate - now;
-
-        if (diff <= 0) {
-          return "LA FINALE EST EN COURS !";
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        return `${days}j ${hours}h ${minutes}m ${seconds}s`;
-      }
-
-      function simulateLoading() {
-        const loader = document.getElementById("loader");
-        const progressBar = document.getElementById("loader-progress");
-        const mainContent = document.getElementById("main-content");
-
-        let progress = 0;
-        const startTime = Date.now();
-
-        const progressInterval = setInterval(() => {
-          progress += Math.random() * 10;
-          if (progress > 90) progress = 90;
-          progressBar.style.width = `${progress}%`;
-        }, 200);
-
-        function completeLoading() {
-          const elapsed = Date.now() - startTime;
-          const remainingTime = Math.max(0, CONFIG.minLoadingTime - elapsed);
-
-          setTimeout(() => {
-            clearInterval(progressInterval);
-            progressBar.style.width = "100%";
-
-            setTimeout(() => {
-              loader.style.opacity = "0";
-
-              setTimeout(() => {
-                loader.style.display = "none";
-                mainContent.style.opacity = "1";
-                initSite();
-              }, 500);
-            }, 300);
-          }, remainingTime);
-        }
-
-        if (document.fonts && document.fonts.ready) {
-          document.fonts.ready
-            .then(() => {
-              completeLoading();
-            })
-            .catch(() => {
-              setTimeout(completeLoading, CONFIG.minLoadingTime);
-            });
-        } else {
-          setTimeout(completeLoading, CONFIG.minLoadingTime);
-        }
-      }
-
-      function initSite() {
-        loadLogo();
-        displayFinalTeams();
-        setupCountdown();
-        updateTimestamp();
-      }
-
-      function loadLogo() {
-        const logo = document.getElementById("main-logo");
-        const img = new Image();
-
-        img.onload = function () {
-          logo.src = this.src;
+        const CONFIG = {
+            logo: "./assets/images/logo.jpg",
+            minLoadingTime: 2000,
+            finalDate: '2025-04-25T09:00:00+03:00' // 9h heure de Madagascar (UTC+3)
         };
 
-        img.onerror = function () {
-          const fallbackExtensions = [".png", ".jpeg", ".webp", ".svg"];
-          let tried = 0;
+        const TEAMS_DATA = [
+            { siege: 1, name: "OLD GAMER" },
+            { siege: 2, name: "GOTHAM" },
+            { siege: 3, name: "AMBOHIPO STREET" },
+            { siege: 4, name: "EAZY GAMES" },
+            { siege: 5, name: "NOOBSTORM" },
+            { siege: 6, name: "BRIGADE FANTÔME" },
+            { siege: 7, name: "UNKNOW BRAIN" },
+            { siege: 8, name: "MDG ESPORT" },
+            { siege: 9, name: "SUICIDE SQUAD" },
+            { siege: 10, name: "THE INVISIBLE AFK" },
+            { siege: 11, name: "TEAM BABY" },
+            { siege: 12, name: "DARK PRIME" }
+        ];
 
-          function tryNextFallback() {
-            if (tried < fallbackExtensions.length) {
-              const newSrc = CONFIG.logo.replace(
-                ".jpg",
-                fallbackExtensions[tried]
-              );
-              tried++;
-              const fallbackImg = new Image();
-              fallbackImg.onload = function () {
-                logo.src = newSrc;
-              };
-              fallbackImg.onerror = tryNextFallback;
-              fallbackImg.src = newSrc;
-            } else {
-              logo.src =
-                "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%231a0d2a'/%3E%3Ctext x='60' y='65' font-family='Arial' font-size='14' fill='%23ffffff' text-anchor='middle'%3ENQ 2025%3C/text%3E%3C/svg%3E";
-              document.body.classList.add("degraded-mode");
+        // Fonction de compte à rebours pour la finale
+        function updateCountdown() {
+            const finalDate = new Date(CONFIG.finalDate);
+            const now = new Date();
+            const diff = finalDate - now;
+            
+            if (diff <= 0) {
+                return "LA FINALE EST EN COURS !";
             }
-          }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            return `${days}j ${hours}h ${minutes}m ${seconds}s`;
+        }
 
-          tryNextFallback();
-        };
+        function simulateLoading() {
+            const loader = document.getElementById('loader');
+            const progressBar = document.getElementById('loader-progress');
+            const mainContent = document.getElementById('main-content');
+            
+            let progress = 0;
+            const startTime = Date.now();
+            
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 90) progress = 90;
+                progressBar.style.width = `${progress}%`;
+            }, 200);
+            
+            function completeLoading() {
+                const elapsed = Date.now() - startTime;
+                const remainingTime = Math.max(0, CONFIG.minLoadingTime - elapsed);
+                
+                setTimeout(() => {
+                    clearInterval(progressInterval);
+                    progressBar.style.width = '100%';
+                    
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            mainContent.style.opacity = '1';
+                            initSite();
+                        }, 500);
+                    }, 300);
+                }, remainingTime);
+            }
+            
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    completeLoading();
+                }).catch(() => {
+                    setTimeout(completeLoading, CONFIG.minLoadingTime);
+                });
+            } else {
+                setTimeout(completeLoading, CONFIG.minLoadingTime);
+            }
+        }
+        
+        function initSite() {
+            loadLogo();
+            displayFinalTeams();
+            setupCountdown();
+            updateTimestamp();
+        }
 
-        img.src = CONFIG.logo;
-      }
+        function loadLogo() {
+            const logo = document.getElementById('main-logo');
+            const img = new Image();
+            
+            img.onload = function() {
+                logo.src = this.src;
+            };
+            
+            img.onerror = function() {
+                const fallbackExtensions = ['.png', '.jpeg', '.webp', '.svg'];
+                let tried = 0;
+                
+                function tryNextFallback() {
+                    if (tried < fallbackExtensions.length) {
+                        const newSrc = CONFIG.logo.replace('.jpg', fallbackExtensions[tried]);
+                        tried++;
+                        const fallbackImg = new Image();
+                        fallbackImg.onload = function() {
+                            logo.src = newSrc;
+                        };
+                        fallbackImg.onerror = tryNextFallback;
+                        fallbackImg.src = newSrc;
+                    } else {
+                        logo.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%231a0d2a'/%3E%3Ctext x='60' y='65' font-family='Arial' font-size='14' fill='%23ffffff' text-anchor='middle'%3ENQ 2025%3C/text%3E%3C/svg%3E";
+                        document.body.classList.add('degraded-mode');
+                    }
+                }
+                
+                tryNextFallback();
+            };
+            
+            img.src = CONFIG.logo;
+        }
 
-      function displayFinalTeams() {
-        const teamListElement = document.getElementById("final-teams-list");
-        teamListElement.innerHTML = "";
-
-        TEAMS_DATA.forEach((team, index) => {
-          const teamElement = document.createElement("div");
-          teamElement.className = "final-team";
-
-          teamElement.innerHTML = `
+        function displayFinalTeams() {
+            const teamListElement = document.getElementById('final-teams-list');
+            teamListElement.innerHTML = '';
+            
+            TEAMS_DATA.forEach((team, index) => {
+                const teamElement = document.createElement('div');
+                teamElement.className = 'final-team';
+                
+                teamElement.innerHTML = `
                     <div class="final-team-siege">${team.siege}</div>
                     <div class="final-team-name">${team.name}</div>
                 `;
-
-          teamListElement.appendChild(teamElement);
-        });
-      }
-
-      function setupCountdown() {
-        function updateTimer() {
-          document.getElementById("countdown-timer").textContent =
-            updateCountdown();
+                
+                teamListElement.appendChild(teamElement);
+            });
         }
 
-        updateTimer();
-        setInterval(updateTimer, 1000);
-      }
+        function setupCountdown() {
+            function updateTimer() {
+                document.getElementById('countdown-timer').textContent = updateCountdown();
+            }
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
 
-      function updateTimestamp() {
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString("fr-FR", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
+        function updateTimestamp() {
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('last-update').textContent = formattedDate;
+        }
+
+        function handleGlobalError(event) {
+            console.error("Erreur interceptée:", event.message || event);
+            document.body.classList.add('degraded-mode');
+            
+            if (event.preventDefault) event.preventDefault();
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('error', handleGlobalError);
+            window.addEventListener('unhandledrejection', handleGlobalError);
+            simulateLoading();
         });
-
-        document.getElementById("last-update").textContent = formattedDate;
-      }
-
-      function handleGlobalError(event) {
-        console.error("Erreur interceptée:", event.message || event);
-        document.body.classList.add("degraded-mode");
-
-        if (event.preventDefault) event.preventDefault();
-        return true;
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        window.addEventListener("error", handleGlobalError);
-        window.addEventListener("unhandledrejection", handleGlobalError);
-        simulateLoading();
-      });
     </script>
-  </body>
+</body>
 </html>
