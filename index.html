@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Liste des équipes qualifiées pour les National Qualifiers 2025">
     <title>ÉQUIPES QUALIFIÉES - NATIONAL QUALIFIERS 2025</title>
+    
+    <!-- Preload des polices et ressources critiques -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;600&display=swap" as="style">
+    <link rel="preload" href="./assets/images/logo.webp" as="image" type="image/webp">
+    <link rel="preload" href="./assets/images/icon.ico" as="image" type="image/x-icon">
     
     <link rel="icon" href="./assets/images/icon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;600&display=swap">
@@ -20,8 +26,10 @@
             --text-secondary: #b8b8b8;
             --qualif-color: #00ff88;
             --final-color: #9d4dff;
+            --warning-color: #ff5555;
             --header-gradient: linear-gradient(135deg, #6e00ff 0%, #ff00f5 100%);
             --card-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+            --transition-base: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -31,15 +39,17 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
             background: var(--dark-bg);
             color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden;
             touch-action: manipulation;
+            line-height: 1.6;
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(110, 0, 255, 0.15) 0%, transparent 25%),
                 radial-gradient(circle at 80% 70%, rgba(255, 0, 245, 0.15) 0%, transparent 25%);
+            will-change: background-position;
         }
 
         .loader-overlay {
@@ -54,7 +64,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            transition: opacity var(--transition-base);
         }
 
         .loader {
@@ -111,7 +121,7 @@
             height: 100%;
             width: 0%;
             background: var(--header-gradient);
-            transition: width 0.3s ease;
+            transition: width var(--transition-base);
         }
 
         .overlay {
@@ -120,7 +130,7 @@
             position: relative;
             overflow: hidden;
             opacity: 0;
-            transition: opacity 0.5s ease-in;
+            transition: opacity var(--transition-base);
         }
 
         .glow-effect {
@@ -132,17 +142,26 @@
             filter: blur(60px);
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
         }
 
         .glow-1 {
             top: -100px;
             left: -100px;
+            animation: float 15s ease-in-out infinite alternate;
         }
 
         .glow-2 {
             bottom: -100px;
             right: -100px;
             background: radial-gradient(circle, rgba(255, 0, 245, 0.4) 0%, transparent 70%);
+            animation: float 18s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+            100% { transform: translate(-30px, -30px); }
         }
 
         .header {
@@ -164,8 +183,9 @@
             border: 3px solid var(--primary-color);
             box-shadow: 0 0 40px rgba(157, 77, 255, 0.6);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all var(--transition-base);
             position: relative;
+            will-change: transform;
         }
 
         .logo-container::after {
@@ -193,6 +213,11 @@
             background: var(--dark-bg);
             border-radius: 50%;
             padding: 10px;
+            transition: transform 0.5s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05) rotate(5deg);
         }
 
         h1 {
@@ -233,8 +258,14 @@
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(157, 77, 255, 0.3);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             position: relative;
             overflow: hidden;
+            transition: transform var(--transition-base);
+        }
+
+        .countdown-container:hover {
+            transform: translateY(-5px);
         }
 
         .countdown-container::before {
@@ -259,7 +290,7 @@
         .countdown-timer {
             font-family: 'Orbitron', sans-serif;
             color: var(--primary-color);
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: bold;
             margin: 0.5rem 0;
             letter-spacing: 2px;
@@ -280,9 +311,15 @@
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(157, 77, 255, 0.3);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             overflow: hidden;
             margin-bottom: 2rem;
             position: relative;
+            transition: transform var(--transition-base);
+        }
+
+        .lobby:hover {
+            transform: translateY(-3px);
         }
 
         .lobby::before {
@@ -299,7 +336,7 @@
             background: transparent;
             padding: 1.5rem;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            font-size: clamp(1.2rem, 4vw, 1.4rem);
             color: white;
             text-align: center;
             letter-spacing: 2px;
@@ -333,6 +370,7 @@
 
         .team-list {
             padding: 0;
+            list-style: none;
         }
 
         .final-team {
@@ -341,7 +379,7 @@
             padding: 1.2rem 1.5rem;
             margin: 0;
             background: rgba(255, 255, 255, 0.03);
-            transition: all 0.3s ease;
+            transition: all var(--transition-base);
             position: relative;
             align-items: center;
         }
@@ -352,12 +390,13 @@
 
         .final-team:hover {
             background: rgba(157, 77, 255, 0.1);
+            transform: translateX(5px);
         }
 
         .final-team-siege {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: var(--secondary-color);
             text-align: center;
             display: flex;
@@ -367,7 +406,7 @@
 
         .final-team-name {
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
             letter-spacing: 0.5px;
             text-align: center;
             display: flex;
@@ -384,7 +423,13 @@
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(157, 77, 255, 0.3);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             position: relative;
+            transition: transform var(--transition-base);
+        }
+
+        .info-container:hover {
+            transform: translateY(-3px);
         }
 
         .info-container::before {
@@ -400,7 +445,7 @@
         .info-container p {
             margin-bottom: 1.2rem;
             line-height: 1.6;
-            font-size: 1.05rem;
+            font-size: clamp(0.95rem, 3vw, 1.05rem);
         }
 
         .highlight {
@@ -434,6 +479,14 @@
             background: linear-gradient(to right, transparent, rgba(157, 77, 255, 0.5), transparent);
         }
 
+        /* Mode dégradé pour les appareils moins performants */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
         .degraded-mode {
             animation: none !important;
         }
@@ -443,10 +496,12 @@
         .degraded-mode .lobby,
         .degraded-mode .info-container,
         .degraded-mode .countdown-container {
-            backdrop-filter: none;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
             background: rgba(30, 20, 50, 0.95);
         }
 
+        /* Optimisations pour mobile */
         @media (max-width: 768px) {
             .overlay {
                 padding: 1.5rem;
@@ -462,8 +517,8 @@
                 font-size: 1rem;
             }
             
-            .countdown-timer {
-                font-size: 2rem;
+            .info-container {
+                padding: 1.5rem;
             }
         }
 
@@ -476,7 +531,6 @@
             .final-team {
                 grid-template-columns: 60px 1fr;
                 padding: 0.8rem;
-                font-size: 0.9rem;
             }
             
             .final-team-siege {
@@ -487,16 +541,8 @@
                 font-size: 0.95rem;
             }
             
-            .countdown-timer {
-                font-size: 1.8rem;
-            }
-            
             .info-container {
-                padding: 1.5rem;
-            }
-            
-            .info-container p {
-                font-size: 0.95rem;
+                padding: 1.2rem;
             }
         }
     </style>
@@ -520,7 +566,7 @@
         
         <div class="header">
             <div class="logo-container">
-                <img class="logo-img" id="main-logo" alt="Logo National Qualifiers 2025">
+                <img class="logo-img" id="main-logo" alt="Logo National Qualifiers 2025" loading="eager">
             </div>
             
             <h1>ÉQUIPES QUALIFIÉES</h1>
@@ -531,7 +577,7 @@
             <div class="countdown-container">
                 <div class="countdown-title">COMPTE À REBOURS FINALE</div>
                 <div class="countdown-timer" id="countdown-timer"></div>
-                <div class="event-info">25 Avril 2025 - 9h au Stade Barea Mahamasina</div>
+                <div class="event-info">25 Avril 2025 - 9h @ Stade Barea Mahamasina</div>
             </div>
 
             <div class="lobby">
@@ -547,8 +593,8 @@
 
             <div class="info-container">
                 <p><span class="highlight">Félicitations</span> aux 12 équipes qui ont obtenu leur place pour la grande finale !</p>
-                <p>Suite à un manque de professionnalisme, l'équipe <span class="warning">GOTHAM</span> a été disqualifiée et remplacée par <span class="highlight">CIPHER POL 0</span> selon l'article 12.5 du règlement.</p>
-                <p>Les sièges ont été réattribués selon les performances globales durant les phases éliminatoires.</p>
+                <p>Suite à un <span class="highlight">forfait de dernière minute</span>, l'équipe <span class="warning">GOTHAM</span> n'a pu honorer sa qualification et a dû déclarer forfait, conformément à l'article 12.5 du règlement.</p>
+                <p>Le comité d'organisation a donc désigné <span class="highlight">CIPHER POL 0</span> comme remplaçante, et les sièges ont été réattribués selon les performances globales durant les phases éliminatoires.</p>
             </div>
         </div>
 
@@ -558,13 +604,16 @@
     </div>
 
     <script>
+        // Configuration de l'application
         const CONFIG = {
-            logo: "./assets/images/logo.jpg",
+            logo: "./assets/images/logo.webp",
+            fallbackLogo: "./assets/images/logo.png",
             minLoadingTime: 2000,
-            finalDate: '2025-04-25T09:00:00+03:00' // 9h heure de Madagascar (UTC+3)
+            finalDate: '2025-04-25T09:00:00+03:00', // 9h heure de Madagascar (UTC+3)
+            performanceThreshold: 50 // Seuil de performance pour les animations
         };
 
-        // Données des équipes avec leurs performances originales
+        // Données des équipes avec leurs performances
         const TEAMS_PERFORMANCE = [
             { name: "OLD GAMER", points: 97 },
             { name: "AMBOHIPO STREET", points: 87 },
@@ -580,16 +629,30 @@
             { name: "DARK PRIME", points: 38 }
         ];
 
-        // Classement final basé sur les performances
-        const FINAL_TEAMS = [...TEAMS_PERFORMANCE]
-            .sort((a, b) => b.points - a.points)
-            .map((team, index) => ({
-                siege: index + 1,
-                name: team.name,
-                points: team.points
-            }));
+        // Fonction pour détecter les appareils peu performants
+        function isLowPerformanceDevice() {
+            return (
+                navigator.hardwareConcurrency < 4 ||
+                (navigator.deviceMemory || 4) < 2 ||
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            );
+        }
 
-        // Fonction de compte à rebours pour la finale
+        // Fonction pour formater la date
+        function formatDate(date) {
+            const options = {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            return new Intl.DateTimeFormat('fr-FR', options).format(date);
+        }
+
+        // Fonction de compte à rebours optimisée
         function updateCountdown() {
             const finalDate = new Date(CONFIG.finalDate);
             const now = new Date();
@@ -607,6 +670,7 @@
             return `${days}j ${hours}h ${minutes}m ${seconds}s`;
         }
 
+        // Simulation de chargement avec optimisations
         function simulateLoading() {
             const loader = document.getElementById('loader');
             const progressBar = document.getElementById('loader-progress');
@@ -614,6 +678,11 @@
             
             let progress = 0;
             const startTime = Date.now();
+            
+            // Détection précoce des appareils peu performants
+            if (isLowPerformanceDevice()) {
+                document.body.classList.add('degraded-mode');
+            }
             
             const progressInterval = setInterval(() => {
                 progress += Math.random() * 10;
@@ -641,6 +710,7 @@
                 }, remainingTime);
             }
             
+            // Optimisation du chargement des polices
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(() => {
                     completeLoading();
@@ -652,52 +722,62 @@
             }
         }
         
+        // Initialisation du site
         function initSite() {
             loadLogo();
             displayFinalTeams();
             setupCountdown();
             updateTimestamp();
+            setupIntersectionObserver();
         }
 
+        // Chargement du logo avec fallback
         function loadLogo() {
             const logo = document.getElementById('main-logo');
             const img = new Image();
             
+            img.src = CONFIG.logo;
+            img.loading = 'eager';
+            img.decoding = 'async';
+            
             img.onload = function() {
                 logo.src = this.src;
+                logo.onload = () => {
+                    logo.style.opacity = '1';
+                };
             };
             
             img.onerror = function() {
-                const fallbackExtensions = ['.png', '.jpeg', '.webp', '.svg'];
-                let tried = 0;
-                
-                function tryNextFallback() {
-                    if (tried < fallbackExtensions.length) {
-                        const newSrc = CONFIG.logo.replace('.jpg', fallbackExtensions[tried]);
-                        tried++;
-                        const fallbackImg = new Image();
-                        fallbackImg.onload = function() {
-                            logo.src = newSrc;
-                        };
-                        fallbackImg.onerror = tryNextFallback;
-                        fallbackImg.src = newSrc;
-                    } else {
-                        logo.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%231a0d2a'/%3E%3Ctext x='60' y='65' font-family='Arial' font-size='14' fill='%23ffffff' text-anchor='middle'%3ENQ 2025%3C/text%3E%3C/svg%3E";
-                        document.body.classList.add('degraded-mode');
-                    }
-                }
-                
-                tryNextFallback();
+                const fallbackImg = new Image();
+                fallbackImg.src = CONFIG.fallbackLogo;
+                fallbackImg.onload = function() {
+                    logo.src = this.src;
+                };
+                fallbackImg.onerror = function() {
+                    // Fallback SVG ultra-léger
+                    logo.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%231a0d2a'/%3E%3Ctext x='60' y='65' font-family='Arial' font-size='14' fill='%23ffffff' text-anchor='middle'%3ENQ 2025%3C/text%3E%3C/svg%3E";
+                    document.body.classList.add('degraded-mode');
+                };
             };
-            
-            img.src = CONFIG.logo;
         }
 
+        // Affichage des équipes qualifiées
         function displayFinalTeams() {
             const teamListElement = document.getElementById('final-teams-list');
-            teamListElement.innerHTML = '';
             
-            FINAL_TEAMS.forEach((team) => {
+            // Classement final basé sur les performances
+            const finalTeams = [...TEAMS_PERFORMANCE]
+                .sort((a, b) => b.points - a.points)
+                .map((team, index) => ({
+                    siege: index + 1,
+                    name: team.name,
+                    points: team.points
+                }));
+            
+            // Utilisation de DocumentFragment pour une meilleure performance
+            const fragment = document.createDocumentFragment();
+            
+            finalTeams.forEach((team) => {
                 const teamElement = document.createElement('div');
                 teamElement.className = 'final-team';
                 
@@ -706,33 +786,65 @@
                     <div class="final-team-name">${team.name}</div>
                 `;
                 
-                teamListElement.appendChild(teamElement);
+                fragment.appendChild(teamElement);
             });
+            
+            teamListElement.appendChild(fragment);
         }
 
+        // Configuration du compte à rebours
         function setupCountdown() {
             function updateTimer() {
-                document.getElementById('countdown-timer').textContent = updateCountdown();
+                const timerElement = document.getElementById('countdown-timer');
+                if (timerElement) {
+                    timerElement.textContent = updateCountdown();
+                }
             }
             
+            // Mise à jour immédiate puis toutes les secondes
             updateTimer();
-            setInterval(updateTimer, 1000);
-        }
-
-        function updateTimestamp() {
-            const now = new Date();
-            const formattedDate = now.toLocaleDateString('fr-FR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
+            const timerInterval = setInterval(updateTimer, 1000);
+            
+            // Nettoyage de l'intervalle si l'élément est retiré du DOM
+            const observer = new MutationObserver(() => {
+                if (!document.getElementById('countdown-timer')) {
+                    clearInterval(timerInterval);
+                    observer.disconnect();
+                }
             });
             
-            document.getElementById('last-update').textContent = formattedDate;
+            observer.observe(document.body, { childList: true, subtree: true });
         }
 
+        // Mise à jour du timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const formattedDate = formatDate(now);
+            
+            const updateElement = document.getElementById('last-update');
+            if (updateElement) {
+                updateElement.textContent = formattedDate;
+            }
+        }
+
+        // Configuration de l'Intersection Observer pour les animations
+        function setupIntersectionObserver() {
+            if ('IntersectionObserver' in window && !isLowPerformanceDevice()) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('.lobby, .countdown-container, .info-container').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        }
+
+        // Gestion des erreurs globales
         function handleGlobalError(event) {
             console.error("Erreur interceptée:", event.message || event);
             document.body.classList.add('degraded-mode');
@@ -741,10 +853,23 @@
             return true;
         }
 
+        // Initialisation au chargement du DOM
         document.addEventListener('DOMContentLoaded', () => {
+            // Gestion des erreurs
             window.addEventListener('error', handleGlobalError);
             window.addEventListener('unhandledrejection', handleGlobalError);
+            
+            // Démarrer le chargement
             simulateLoading();
+            
+            // Optimisation : préchargement des ressources
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
         });
     </script>
 </body>
